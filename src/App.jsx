@@ -17,6 +17,11 @@ import SpeedDial from "./components/utils/SpeedDial";
 import AdminProfile from "./components/admin/AdminProfile";
 import AdminAddProduct from "./components/admin/AdminAddProduct";
 import AdminUsers from "./components/admin/AdminUsers.jsx"
+import AdminUpdateOrder from "./components/admin/AdminUpdateOrder.jsx";
+import AllOrders from "./components/order/AllOrders.jsx";
+import AdminOrders from "./components/admin/AdminOrders.jsx";
+import AdminUpdateProduct from "./components/admin/AdminUpdateProduct.jsx";
+import AdminProducts from "./components/admin/AdminProducts.jsx"
 
 function App() {
 
@@ -31,7 +36,7 @@ function App() {
       {/* <AdminLogin/> */}
       {/* <ProductDetailDesign/> */}
 
-      {/* <AllOrdersDesign/> */}
+      {/* <AllOrders/> */}
       {/* <OrderDetailDesign/> */}
       {/* <MyReviewDesign/> */}
       {/* <Cart/> */}
@@ -43,8 +48,12 @@ function App() {
 
      {/* <AdminProfile/> */}
      {/* <AdminAddProduct/> */}
-     <AdminUsers/>
-      
+     {/* <AdminUsers/> */}
+      {/* <AdminUpdateOrder/> */}
+      {/* <AdminOrders/> */}
+      {/* <AdminUpdateOrder/> */}
+      {/* <AdminUpdateProduct/> */}
+      <AdminProducts/>
 
 
     

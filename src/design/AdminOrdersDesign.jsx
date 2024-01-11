@@ -1,15 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import adminImage02 from "../assets/image/adminImage02.png"
 import pc2 from "../assets/image/pc2.jpg"
 
-
-function AdminUsersDesign() {
-    
-  const [showImage, setShowImage] = useState(false);
-
+function AdminOrdersDesign() {
   return (
     <div>
-
+        
         {/* header */}
         <div className='mt-5 mb-8'>
         <div className="w-[100%] md:w-[80%] m-auto ">
@@ -17,7 +13,7 @@ function AdminUsersDesign() {
             <div className="bg-black  rounded-lg flex justify-center items-center ">
                 <img src={adminImage02} alt="" />
                 <h3 className="text-lg text-amber-300  font-semibold  leading-7 p-3 rounded-lg text-center">
-                Admin - Customers Details
+                Admin - Orders Details
                 </h3>
             </div>
             </div>
@@ -46,62 +42,64 @@ function AdminUsersDesign() {
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
-                            name
+                            orderId
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            email
+                            userId
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            username
+                            customerName
                         </th>
                         <th scope="col" class="px-6 py-3">
                             contact
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Orders
+                            orderAddress
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            address                    
+                            totalAmount               
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Avatar
+                            Status
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Delete
+                            Modify
                         </th>
+                      
 
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            ravi
+                        <th scope="row" class="px-6 py-4  font-medium text-blue-600 hover:cursor-pointer hover:text-blue-800 whitespace-nowrap dark:text-white">
+                            #78946545
                         </th>
                         <td class="px-6 py-4">
-                            ravi@gmai.com
+                            #sw45645645
                         </td>
                         <td class="px-6 py-4">
-                            ravi123
+                            ravi
                             
                         </td>
                         <td class="px-6 py-4">
                             987456321
                         </td>
-                        <td class="px-6 py-4">
-                            2
-                        </td>
                         <td class="px-6 py-4 text-[0.7rem] ">
-                            sadarpursec -45 noida
+                            sadarpur noida
+                        </td>
+                        <td class="px-6 py-4 ">
+                            19875
                         </td>
                         <td class="px-6 py-4">
                             
                             <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                             onClick={() => setShowImage(true)}
-                            >Photo</a>
+                            >Pending</a>
                         </td>
-                        <td class="px-6 py-4">
-                            <a href="#" class="font-bold text-red-700 hover:underline">D</a>
+                        <td class="px-6 py-4 bg-green-400 text-black hover:cursor-pointer hover:bg-green-200 font-bold">
+                            Update
                         </td>
+                        
                     </tr>
                 
                 </tbody>
@@ -109,41 +107,9 @@ function AdminUsersDesign() {
         </div>
         <br /><br /><br />
 
-
-
-      {/* Pop-up image */}
-        <div className="relative">
-      {showImage && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="max-w-3xl mx-auto">
-            {/* Close button */}
-            <button
-              onClick={() => setShowImage(false)}
-              className="absolute top-4 right-4 text-white text-2xl focus:outline-none"
-            >
-              &times;
-            </button>
-
-            {/* Image */}
-            <img
-              src={pc2}
-              alt="Pop-up Image"
-              className="rounded-lg"
-            />
-          </div>
-        </div>
-      )}
-         </div>
-
-
-        
-
-
-
-
-    
+      
     </div>
   )
 }
 
-export default AdminUsersDesign
+export default AdminOrdersDesign
