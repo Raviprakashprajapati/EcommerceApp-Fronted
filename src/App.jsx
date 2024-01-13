@@ -22,19 +22,25 @@ import AllOrders from "./components/order/AllOrders.jsx";
 import AdminOrders from "./components/admin/AdminOrders.jsx";
 import AdminUpdateProduct from "./components/admin/AdminUpdateProduct.jsx";
 import AdminProducts from "./components/admin/AdminProducts.jsx"
+import AdminDashboard from "./components/admin/AdminDashboard.jsx";
+import EletronicProduct from "./components/product/soloproduct/EletronicProduct.jsx";
+import SoloProduct from "./components/product/soloproduct/SoloProduct.jsx";
+import FilterProduct from "./components/public/FilterProduct.jsx";
 
 function App() {
 
 
 
   return (
-    <>
-
+    <>                    
+ 
       {/* <Home/> */}
       {/* <Login/> */}
       {/* <Signup/> */}
-      {/* <AdminLogin/> */}
       {/* <ProductDetailDesign/> */}
+     {/* <EletronicProduct/> */}
+     <FilterProduct/>
+     <SoloProduct/>
 
       {/* <AllOrders/> */}
       {/* <OrderDetailDesign/> */}
@@ -46,6 +52,7 @@ function App() {
      {/* <UpdateAvatar/> */}
      {/* <SpeedDial/> */}
 
+      {/* <AdminLogin/> */}
      {/* <AdminProfile/> */}
      {/* <AdminAddProduct/> */}
      {/* <AdminUsers/> */}
@@ -53,7 +60,8 @@ function App() {
       {/* <AdminOrders/> */}
       {/* <AdminUpdateOrder/> */}
       {/* <AdminUpdateProduct/> */}
-      <AdminProducts/>
+      {/* <AdminProducts/> */}
+      {/* <AdminDashboard/> */}
 
 
     

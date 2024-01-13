@@ -10,8 +10,8 @@ function AdminOrdersDesign() {
         <div className='mt-5 mb-8'>
         <div className="w-[100%] md:w-[80%] m-auto ">
             <div className="px-4 sm:px-0 ">
-            <div className="bg-black  rounded-lg flex justify-center items-center ">
-                <img src={adminImage02} alt="" />
+            <div className="bg-black p-2 rounded-lg flex justify-center items-center ">
+                <img src={adminImage02}  className='h-[4rem]' alt="" />
                 <h3 className="text-lg text-amber-300  font-semibold  leading-7 p-3 rounded-lg text-center">
                 Admin - Orders Details
                 </h3>

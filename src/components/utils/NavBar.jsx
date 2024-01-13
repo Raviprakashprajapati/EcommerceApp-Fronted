@@ -3,6 +3,7 @@ import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import "../../css/NavBar.css"
 import { Sidebar } from "flowbite-react";
 import logo from "../../assets/image/logo.png";
+import birdImage from "../../assets/image/birdImage.png"
 import {
   HiArrowSmRight,
   HiChartPie,
@@ -66,6 +67,7 @@ function NavBar() {
           </Sidebar.Items>
         </Sidebar>
       ) : null}
+
 
       {/* FIRST NAVBAR */}
       <Navbar fluid rounded>
