@@ -34,13 +34,13 @@ function App() {
   return (
     <>                    
  
-      {/* <Home/> */}
+      <Home/>
       {/* <Login/> */}
       {/* <Signup/> */}
       {/* <ProductDetailDesign/> */}
      {/* <EletronicProduct/> */}
-     <FilterProduct/>
-     <SoloProduct/>
+     {/* <FilterProduct/> */}
+     {/* <SoloProduct/> */}
 
       {/* <AllOrders/> */}
       {/* <OrderDetailDesign/> */}

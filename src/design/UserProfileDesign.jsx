@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function UserProfileDesign() {
   const [showPassword, setShowPassword] = useState(false);
@@ -6,6 +7,9 @@ function UserProfileDesign() {
   const togglePasswordPopup = () => {
     setShowPassword(!showPassword);
   };
+
+  const navigate = useNavigate()
+
 
   return (
     <div><br /><br />
@@ -122,24 +126,29 @@ function UserProfileDesign() {
       <div className="w-[93%] md:w-[80%] flex flex-col justify-center items-center gap-4 mb-10 ">
 
         
-          <button class="px-4 py-1 text-lg text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">
+          <button class="px-4 py-1 text-lg text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2"
+          onClick={()=>navigate("/update-profile")}
+          >
             Edit Profile
           </button>
 
           {/* <button className="px-3"></button> */}
 
-          <button class="px-4 py-1 text-lg text-purple-800 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">
+          <button class="px-4 py-1 text-lg text-purple-800 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2" 
+          onClick={()=>navigate("/update-avatar")}>
             Edit Avatar
           </button>
 
           {/* <button className="px-3"></button> */}
 
-          <button class="px-4 py-1 text-lg text-purple-800 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">
+          <button class="px-4 py-1 text-lg text-purple-800 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2" 
+          onClick={()=>navigate("/update-password")}>
             Change Password
           </button>
         {/* </div> */}
 
-        <button className="bg-red-500 p-2 font-semibold  w-40 text-black rounded-lg hover:bg-red-700">
+        <button className="bg-red-500 p-2 font-semibold  w-40 text-black rounded-lg hover:bg-red-700" 
+          onClick={()=>navigate("/")}>
           Logout
         </button>
 
