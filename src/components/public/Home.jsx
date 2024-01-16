@@ -1,15 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CarouselBar from '../../design/CarouselBar'
 import NavBar from '../utils/NavBar'
 import ProductCardHome from '../../design/ProductCardHome'
-
+import Loader from '../utils/Loader'
 import image05 from "../../assets/image/image05.jpg"
 import Footer from '../utils/Footer'
 
 function Home() {
+
+  const [isLoading,setIsLoading] = useState(true)
+
+  useEffect(()=>{
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 1000);
+  },[])
+
+  
+  
   return (
     <>
-      {/* Second navbar */}
+
+    
+
+
+    {
+      isLoading?<Loader/>:  <>
+     
 
       {/* SECOND NAVBAR */}
       <nav className="bg-gray-50 dark:bg-gray-700">
@@ -101,10 +118,15 @@ function Home() {
         </div>
       </div>
       </div>
+
+      <Footer/>
     
    
 
     
+    </>
+    }
+  
     </>
   )
 }

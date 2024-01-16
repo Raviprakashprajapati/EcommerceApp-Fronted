@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    currentUser:null,
-    isLoading:true,
-    error:false
+    currentUser:JSON.parse(localStorage.getItem("user")) || null,
+    
 }
 
 export const fetchUser = createAsyncThunk()

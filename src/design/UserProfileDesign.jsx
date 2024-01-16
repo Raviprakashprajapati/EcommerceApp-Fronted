@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function UserProfileDesign() {
+function UserProfileDesign({name,email,username,contact,address,password,avatar}) {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordPopup = () => {
@@ -31,13 +31,13 @@ function UserProfileDesign() {
         <div class="py-8 px-8 max-w-sm mx-auto bg-white rounded-xl shadow-lg space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6">
           <img
             class="block mx-auto h-24 rounded-full sm:mx-0 sm:shrink-0"
-            src="https://img.freepik.com/free-vector/happy-middle-age-man-cartoon-head_1308-134364.jpg?w=360&t=st=1704871276~exp=1704871876~hmac=9bd36c2dde7fd5ae9df324d328ed1f3ef17f628f7edf955dcd35a5882522433a"
+            src={avatar}
             alt="Woman's Face"
           />
           <div class="text-center space-y-2 sm:text-left">
             <div class="space-y-0.5">
-              <p class="text-lg text-black font-semibold">Ravi </p>
-              <p class="text-slate-500 font-medium">ravi1234</p>
+              <p class="text-lg text-black font-semibold">{name} </p>
+              <p class="text-slate-500 font-medium">{username}</p>
             </div>
           </div>
         </div>
@@ -50,7 +50,7 @@ function UserProfileDesign() {
                   Full name
                 </dt>
                 <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  Margot Foster
+                  {name}
                 </dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -58,7 +58,7 @@ function UserProfileDesign() {
                   Username
                 </dt>
                 <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  ravi123
+                  {username}
                 </dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -66,7 +66,7 @@ function UserProfileDesign() {
                   Email Id
                 </dt>
                 <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  ravi@gmail.com
+                  {email}
                 </dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -74,7 +74,7 @@ function UserProfileDesign() {
                   contact
                 </dt>
                 <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  895656566
+                  {contact}
                 </dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -82,7 +82,7 @@ function UserProfileDesign() {
                   Address
                 </dt>
                 <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  sadarpur sector-45 Noida
+                  {address}
                 </dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
