@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import loginImage from "../../assets/image/loginImage.jpg";
 import { loginUserAPI } from "../api/userApi";
-import { useDispatch } from "react-redux";
-import { setCurrentUser } from "../store/redux-features/userSlice";
+
 import { useNavigate } from "react-router-dom";
 import CountDown from "../utils/CountDown";
 function Login() {

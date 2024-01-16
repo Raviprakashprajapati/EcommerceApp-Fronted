@@ -3,7 +3,7 @@ import cartImage from "../../assets/image/cartImage.png"
 import cartImage02 from "../../assets/image/cartImage02.png"
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../store/redux-features/userSlice";
-import { cartsUserAPI } from "../api/userApi";
+import { cartsUserAPI } from "../api/cartApi";
 
 function Cart() {
 
@@ -14,7 +14,7 @@ function Cart() {
       
       cartsUserAPI()
       .then((data)=>{
-        // console.log("data ",data?.data)
+        console.log("data ",data?.data)
         if(data?.data){
 
           setCart(data.data)
@@ -43,7 +43,7 @@ function Cart() {
 
        
         {
-          user.cartsId ?
+          user.cartsId?.length>=1 && cart?.totalPrice>0 ?
 
           <>
             {/* carts */}

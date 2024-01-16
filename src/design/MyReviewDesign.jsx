@@ -1,39 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { getDate } from "../components/utils/randomFunciton";
+function MyReviewDesign({comment,
+  rating,
+  product,
+  date}) {
 
-function MyReviewDesign() {
+ 
+
+
   return (
     <>
-      <div className="flex justify-center mt-7 mb-7">
-        <h4 className="bg-slate-400 text-black p-4 text-xl  font-medium rounded-lg ">
-          📝My Reviews
-        </h4>
-      </div>
+
+  
 
       {/* reviews div */}
       <div>
+
         {/* per review */}
         <div class="p-6 w-[90%] mb-4 md:w-[70%] mx-auto bg-white m rounded-xl shadow-lg flex items-center space-x-4">
-          <div class="shrink-0">
-            <img
-              class="h-12 w-12 rounded-full "
-              src="https://img.freepik.com/free-vector/happy-middle-age-man-cartoon-head_1308-134364.jpg?w=360&t=st=1704871276~exp=1704871876~hmac=9bd36c2dde7fd5ae9df324d328ed1f3ef17f628f7edf955dcd35a5882522433a"
-              alt="ChitChat Logo"
-            />
-          </div>
+          
           <div>
-            <p class="text-slate-500 text-sm pt-2 ">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa
-              ipsa illum iure distinctio facilis at enim temporibus voluptas ab
-              ducimus.
+            <p class="text-black mb-3 text-sm pt-2 ">
+              {comment}
             </p>
-            <div class=" text-base md:text-lg font-medium text-black">
-              Product ID
+            <div class=" text-[0.7rem]  font-medium text-white bg-black p-2 inline hover:bg-slate-800">
+              <Link>
+              Product</Link>
             </div>
-            <div class=" text-base md:text-lg font-medium text-black">
-              Star : 3
+            <div class="flex justify-between text-base mt-3 md:text-lg font-medium items-center md:block text-black">
+              <p>Rating : 3</p>
+              <p className="text-slate-600 text-sm" >{date}</p>
             </div>
           </div>
         </div>
+
       </div>
 
 

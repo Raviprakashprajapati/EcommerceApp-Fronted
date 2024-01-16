@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const userBaseURL = '/api/v1/users'
-const productBaseURL = '/api/v1/products'
 
 export const getCurrentUserAPI = async(username) =>{
     try {
@@ -41,12 +40,3 @@ export const  registerUserAPI = async(userData) =>{
       }
 }
 
-export const cartsUserAPI = async()=>{
-    try {
-        const response = await axios.get(`${productBaseURL}/get-cart`)
-        return response.data
-        
-    } catch (error) {
-        throw error
-    }
-}
