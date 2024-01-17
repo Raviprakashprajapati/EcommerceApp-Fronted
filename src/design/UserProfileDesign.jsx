@@ -1,19 +1,67 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { deactivateUserAPI, logoutAPI } from "../components/api/userApi";
+import CountDown from "../components/utils/CountDown";
 
 function UserProfileDesign({name,email,username,contact,address,password,avatar}) {
+
+  const [deactivateCount,setDeactivateCount] = useState(0)
+  const [check,setCheck] = useState(false)
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate()
+  const [modelOpen,setModelOpen] = useState(false)
+
+    const closeModal=()=>{
+      setModelOpen(false)
+    }
 
   const togglePasswordPopup = () => {
     setShowPassword(!showPassword);
   };
 
-  const navigate = useNavigate()
+  function handleLogout(){
+
+    logoutAPI()
+    .then((data)=>{
+      console.log(data)
+      localStorage.clear()
+      navigate("/")
+      window.location.reload()
+
+    })
+    .catch((err)=>{
+      console.log("error: " + err)
+    })
+  
+  }
+
+  function handleDeactiveAccount(){
+    
+    if(check){
+      setModelOpen(true) 
+      deactivateUserAPI()
+      .then((data)=>{
+        console.log(data)
+        localStorage.clear()
+        navigate("/")
+        window.location.reload()
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+     
+    }
+   
+  }
 
 
   return (
     <div><br /><br />
-     
+  
+    {/* COUNTDOWN */}
+    {modelOpen && <CountDown onClose={closeModal} />}
+          
+
       <div className="w-[93%] md:w-[80%] m-auto ">
         {/* profile header */}
         <div className="px-4 sm:px-0 ">
@@ -31,8 +79,8 @@ function UserProfileDesign({name,email,username,contact,address,password,avatar}
         <div class="py-8 px-8 max-w-sm mx-auto bg-white rounded-xl shadow-lg space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6">
           <img
             class="block mx-auto h-24 rounded-full sm:mx-0 sm:shrink-0"
-            src={avatar}
-            alt="Woman's Face"
+            src={avatar ?avatar:"https://img.freepik.com/free-vector/isolated-young-handsome-man-different-poses-white-background-illustration_632498-855.jpg?w=740&t=st=1705485638~exp=1705486238~hmac=aa6aeab85319b5d00d9672285c339cbc5ac0ed007d92fbe52d8d93d7ff0bec48" }
+            alt="profileImage"
           />
           <div class="text-center space-y-2 sm:text-left">
             <div class="space-y-0.5">
@@ -148,13 +196,21 @@ function UserProfileDesign({name,email,username,contact,address,password,avatar}
         {/* </div> */}
 
         <button className="bg-red-500 p-2 font-semibold  w-40 text-black rounded-lg hover:bg-red-700" 
-          onClick={()=>navigate("/")}>
+          onClick={handleLogout}>
           Logout
         </button>
 
-        <button className="bg-red-600 p-2 font-semibold  w-40 text-black rounded-lg">
+        <div className=" p-2 border border-red-600   " >
+       <div className="flex items-center gap-2">
+       <input type="checkbox" checked={check} onChange={()=>setCheck(!check)} />
+        <button className="bg-red-600 hover:bg-red-500 p-2 font-semibold  w-40 text-black rounded-lg" 
+        onClick={handleDeactiveAccount}
+        >
           Deactivate Account
         </button>
+       </div>
+        {/* <p className="text-[0.7rem] text-center pt-2">click  3 times for Deactivate {deactivateCount}</p> */}
+        </div>
       </div>
 
 

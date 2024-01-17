@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 function CountDown({onClose}) {
 
-    const [countdown, setCountdown] = useState(5);
+    const [countdown, setCountdown] = useState(8);
 
     useEffect(() => {
       const timer = setInterval(() => {
@@ -39,3 +39,19 @@ function CountDown({onClose}) {
 }
 
 export default CountDown
+
+
+
+
+// const [modelOpen,setModelOpen] = useState(false)
+
+// const closeModal=()=>{
+//   setModelOpen(false)
+// }
+
+
+// setModelOpen(true) after api IF
+
+ {/* COUNTDOWN */}
+//  {modelOpen && <CountDown onClose={closeModal} />}
+       

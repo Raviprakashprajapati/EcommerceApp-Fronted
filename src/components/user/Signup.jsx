@@ -66,6 +66,7 @@ function Signup() {
           .then((data)=>{
             // setError(false)
             localStorage.clear()
+          
             localStorage.setItem("user", JSON.stringify(data.data.user))
             localStorage.setItem("accessToken", data.data.accessToken)
             localStorage.setItem("refreshToken", data.data.refreshToken)

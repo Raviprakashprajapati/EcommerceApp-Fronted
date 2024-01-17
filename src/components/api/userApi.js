@@ -49,7 +49,7 @@ export const  registerUserAPI = async(userData) =>{
 export const  changeUserPasswordAPI = async(data) =>{
     try {
 
-        const response = await axios.post(`${userBaseURL}/chnage-password`, data);
+        const response = await axios.post(`${userBaseURL}/change-password`, data);
         return response.data;
         
     } catch (error) {

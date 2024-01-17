@@ -39,6 +39,7 @@ function Login() {
       .then((data)=>{
         setError(false)
         localStorage.clear()
+        // localStorage.setItem('password',inputPassword)
         localStorage.setItem("user", JSON.stringify(data.data.user))
         localStorage.setItem("accessToken", data.data.accessToken)
         localStorage.setItem("refreshToken", data.data.refreshToken)

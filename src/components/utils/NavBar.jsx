@@ -222,15 +222,14 @@ function NavBar() {
             arrowIcon={false}
             inline
             label={
-             user? <Avatar
+             user? 
+             <Avatar
              alt="User settings"
-             img={boy}
-             
-             // rounded
-             // bordered
-             // color={"rgb(0 0 0 / 50%)"}
-             className="border rounded-full  border-black hover:border-white"
-           />: <Avatar
+             img={user?.profileImage?user.profileImage:boy}
+             className="border rounded-full   hover:border-yellow-300 hover:border-2"
+           />
+           : 
+           <Avatar
            alt="User settings"
            img={sidebarImage}
            
