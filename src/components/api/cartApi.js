@@ -12,3 +12,54 @@ export const cartsUserAPI = async()=>{
         throw error
     }
 }
+
+//later
+
+export const addToCartAPI = async(id) =>{
+    try {
+
+        const response = await axios.post(`${productBaseURL}/add-to-cart/${id}`)
+        return response.data
+        
+    } catch (error) {
+        throw error
+    }
+}
+
+export const removeProductFromCartAPI = async(id) =>{
+    try {
+
+        const response = await axios.patch(`${productBaseURL}/remove-from-cart/${id}`)
+        return response.data
+        
+    } catch (error) {
+        throw error
+    }
+}
+
+export const incrementProductFromCartAPI = async(productId) =>{
+    try {
+
+        const response = await axios.patch(`${productBaseURL}/get-cart`,productId)
+        return response.data
+        
+    } catch (error) {
+        throw error
+    }
+}
+
+export const decrementProductFromCartAPI = async(productIdForDecrement) =>{
+    try {
+
+        const response = await axios.patch(`${productBaseURL}`,productIdForDecrement)
+        return response.data
+        
+    } catch (error) {
+        throw error
+    }
+}
+
+
+
+
+

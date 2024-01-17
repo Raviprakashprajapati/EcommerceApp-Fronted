@@ -40,3 +40,53 @@ export const  registerUserAPI = async(userData) =>{
       }
 }
 
+
+
+
+
+//later
+
+export const  changeUserPasswordAPI = async(data) =>{
+    try {
+
+        const response = await axios.post(`${userBaseURL}/chnage-password`, data);
+        return response.data;
+        
+    } catch (error) {
+        throw error
+    }
+}
+
+export const updateUserAccountAPI = async(data) =>{
+    try {
+
+        const response = await axios.post(`${userBaseURL}/update-account`,data)
+        return response.data
+        
+    } catch (error) {
+        throw error 
+    }
+}
+
+export const updateUserAvatarAPI = async(data) =>{
+    try {
+
+        const response = await axios.patch(`${userBaseURL}/avatar`,data)
+        return response.data
+        
+    } catch (error) {
+        throw error
+    }
+}
+
+export const deactivateUserAPI = async() =>{
+    try {
+        const response = await axios.delete(`${userBaseURL}/delete-current-user`)
+        return response.data
+        
+    } catch (error) {
+        throw error
+    }
+}
+
+
