@@ -2,7 +2,7 @@ import React from 'react'
 
 function SearchBar() {
   return (
-    <div>
+    <div className='mb-2' >
           {/* searchbar */}
       <div className="w-[80%] md:w-[70%] m-auto" >
      

@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
 import ProductCardHome from "./ProductCardHome";
-import logoRemove from "../assets/image/logoRemove.png";
+import logoR from "../assets/image/logoR.png";
+import { searchProductByReqAPI } from "../components/api/searchApi";
 
-function ProductDetailDesign() {
+function ProductDetailDesign({detail}) {
   const [windowSize, setWindowSize] = useState(window.innerWidth);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [f,setF] = useState(null)
+  const [d,setD] = useState(null)
+  const [o,setO] = useState(null)
+  
+  console.log(detail)
 
   useEffect(() => {
     const handleResize = () => {
@@ -32,10 +38,50 @@ function ProductDetailDesign() {
     // Stop propagation to prevent the modal from closing when clicking inside it
     e.stopPropagation();
   };
+
+  useEffect(()=>{
+
+    if(detail?.features=="null")
+    {}else{
+
+      const formateF = detail?.features.split("\\n")
+      setF(formateF)
+    }
+    const formateD = detail?.description.split("\\n")
+    setD(formateD)
+    const formateO = detail?.offer.split("\\n")
+    setO(formateO)
+
+
+    //related api
+    searchProductByReqAPI({subCategory:detail?.subCategory})
+    .then((data)=>{
+      console.log("related data : " + data.data)
+    })
+    .catch((err)=>{
+      console.log("error : " + err)
+    })
+
+
+
+  },[])
+
+
+  
+
+
+  
+
+
+
+
   return (
     <>
+
+      {/* detail */}
       <div className="bg-white">
         <div className="pt-6">
+          
           <nav aria-label="Breadcrumb">
             <ol
               role="list"
@@ -95,21 +141,21 @@ function ProductDetailDesign() {
             <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
               <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
                 <img
-                  src="https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/h/a/k/-original-imagqx45wnzbh25s.jpeg?q=70"
+                  src={detail?.images?.[0]}
                   alt="Two each of gray, white, and black shirts laying flat."
                   className="h-50 w-72  border p-2 "
                 />
               </div>
               <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
                 <img
-                  src="https://rukminim2.flixcart.com/image/832/832/kzn17680/shirt/0/q/o/l-logo-shirt-infinity-choice-original-imagbhwczbphzk5f.jpeg?q=70"
+                  src={detail?.images?.[1]}
                   alt="Two each of gray, white, and black shirts laying flat."
                   className="h-50 w-72  border p-2 "
                 />
               </div>
               <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
                 <img
-                  src="https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/t/u/k/-original-imagqx3gs36wgjz9.jpeg?q=70"
+                  src={detail?.images?.[2]}
                   alt="Two each of gray, white, and black shirts laying flat."
                   className="h-50 w-[200px]  border p-2 "
                 />
@@ -120,17 +166,17 @@ function ProductDetailDesign() {
             <div className="flex mt-4 overflow-x-auto">
               <img
                 className="flex-shrink-0 w-auto border h-[21rem] p-2 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 rounded-lg shadow-lg mx-2 "
-                src="https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/h/a/k/-original-imagqx45wnzbh25s.jpeg?q=70"
+                src={detail?.images?.[0]}
                 alt="Product 1"
               />
               <img
                 className="flex-shrink-0 w-auto border h-[21rem] p-2 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 rounded-lg shadow-lg mx-2"
-                src="https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/s/a/o/-original-imagqx45b9mje5dh.jpeg?q=70"
+                src={detail?.images?.[1]}
                 alt="Product 2"
               />
               <img
                 className="flex-shrink-0 w-auto border h-[21rem] p-2 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 rounded-lg shadow-lg mx-2"
-                src="https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/t/u/k/-original-imagqx3gs36wgjz9.jpeg?q=70"
+                src={detail?.images?.[2]}
                 alt="Product 3"
               />
             </div>
@@ -140,14 +186,14 @@ function ProductDetailDesign() {
           <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
             <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
               <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-                IPHONE
+              {detail?.name}
               </h1>
             </div>
 
             {/* <!-- Options --> */}
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
-              <p className="text-3xl tracking-tight text-gray-900">$192</p>
+              <p className="text-3xl tracking-tight text-gray-900">₹{detail?.price}</p>
 
               {/* <!-- Reviews --> */}
               <div className="mt-6">
@@ -218,10 +264,10 @@ function ProductDetailDesign() {
                   </div>
                   <p className="sr-only">4 out of 5 stars</p>
                   <a
-                    href="#"
+                    
                     className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500"
                   >
-                    117 reviews
+                    {detail?.reviews?.length} reviews
                   </a>
                 </div>
               </div>
@@ -239,21 +285,22 @@ function ProductDetailDesign() {
               <button
                 type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-green-400 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+
               >
                 Add to Cart
               </button>
 
               <div className="mt-8 border p-4">
                 <h3 className="text-2xl mb-3 font-medium text-gray-900">
-                  Brand : <span className="font-bold">Apple</span>
+                  Brand : <span className="font-bold">{detail?.brand}</span>
                 </h3>
                 <hr />
                 <h3 className="text-2xl mt-3 mb-3  font-medium text-gray-900">
-                  Stock : <span className="font-bold">10</span>
+                  Stock : <span className="font-bold">{detail?.stock}</span>
                 </h3>
                 <hr />
                 <h3 className="text-2xl mt-3  font-medium text-gray-900">
-                  Warranty : <span className="font-bold">1</span>
+                  Warranty : <span className="font-bold">{detail?.warranty}</span>
                 </h3>
               </div>
             </div>
@@ -265,36 +312,35 @@ function ProductDetailDesign() {
 
                 <div className="space-y-6">
                   <p className="text-base text-gray-900">
-                    The latest iPhone featuring advanced technology and stunning
-                    design
+                  {detail?.title=="null"?null:detail.title}
                   </p>
                 </div>
               </div>
 
               {/* FEATURES------- */}
               <div className="mt-10">
-                <h3 className="text-sm font-medium text-gray-900">Features</h3>
+                <h3 className=" font-medium text-black">Features</h3>
 
                 <div className="mt-4">
-                  <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
-                    <li className="text-gray-400">
+                  <ul role="list" className="list-disc space-y-2 pl-4 text-sm" style={{listStyleType:"none"}}  >
+
+                {
+                    f?
+                    <>
+                    {
+                    f.map((i,index)=>(
+                      <li key={index} className="text-gray-400 mb-2">
                       <span className="text-gray-600">
-                        Hand cut and sewn locally
+                        {i}
                       </span>
                     </li>
-                    <li className="text-gray-400">
-                      <span className="text-gray-600">
-                        Dyed with our proprietary colors
-                      </span>
-                    </li>
-                    <li className="text-gray-400">
-                      <span className="text-gray-600">
-                        Pre-washed &amp; pre-shrunk
-                      </span>
-                    </li>
-                    <li className="text-gray-400">
-                      <span className="text-gray-600">Ultra-soft 100% cotton</span>
-                    </li>
+                    ))
+                    }
+                    
+                    </>:"------------------"
+                 
+                }
+                    
                   </ul>
                 </div>
               </div>
@@ -308,42 +354,27 @@ function ProductDetailDesign() {
                 <div className="relative overflow-x-auto">
                   <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
                     <tbody>
-                      <tr className="bg-slate-200   mb-2 dark:bg-gray-800  ">
+                      {
+                        d?
+                        <>
+                        {
+                          d.map((i,index)=>(
+                            <>
+                            <tr key={index} className="bg-slate-200   mb-2 dark:bg-gray-800  ">
                         <td className="px-2 py-2 md:text-sm rounded-lg text-black text-[0.78rem] font-medium ">
-                          Lorem, ipsum dolor sit amet consectetur adipisicing
-                          elit. Dolorem doloribus nam, assumenda ad tempora cum.
+                        {i}
                         </td>
                       </tr>
                       <br />
-                      <tr className="bg-slate-200   mb-2 dark:bg-gray-800  ">
-                        <td className="px-2 py-2 md:text-sm rounded-lg text-black text-[0.78rem] font-medium ">
-                          Lorem, ipsum dolor sit amet consectetur adipisicing
-                          elit. Dolorem doloribus nam, assumenda ad tempora cum.
-                        </td>
-                      </tr>
-                      <br />
-
-                      <tr className="bg-slate-200   mb-2 dark:bg-gray-800  ">
-                        <td className="px-2 py-2 md:text-sm rounded-lg text-black text-[0.78rem] font-medium ">
-                          Lorem, ipsum dolor sit amet consectetur adipisicing
-                          elit. Dolorem doloribus nam, assumenda ad tempora cum.
-                        </td>
-                      </tr>
-                      <br />
-                      <tr className="bg-slate-200   mb-2 dark:bg-gray-800  ">
-                        <td className="px-2 py-2 md:text-sm rounded-lg text-black text-[0.78rem] font-medium ">
-                          Lorem, ipsum dolor sit amet consectetur adipisicing
-                          elit. Dolorem doloribus nam, assumenda ad tempora cum.
-                        </td>
-                      </tr>
-                      <br />
-                      <tr className="bg-slate-200   mb-2 dark:bg-gray-800  ">
-                        <td className="px-2 py-2 md:text-sm rounded-lg text-black text-[0.78rem] font-medium ">
-                          Lorem, ipsum dolor sit amet consectetur adipisicing
-                          elit. Dolorem doloribus nam, assumenda ad tempora cum.
-                        </td>
-                      </tr>
-                      <br />
+                            </>
+                          ))
+                        }
+                        
+                        </>
+                        :
+                        "-------------"
+                      }
+                      
                     </tbody>
                   </table>
                 </div>
@@ -356,21 +387,20 @@ function ProductDetailDesign() {
                 </h4>
 
                 <div className="border rounded-lg p-2">
-                  <p className="text-sm mb-2 text-gray-600">
-                    The 6-Pack includes two black, two white, lorem lorem
+               {
+                o?
+                <>
+                {
+                  o.map((i)=>(
+                    <p className="text-sm mb-2 text-gray-600">
+                    {i}
                   </p>
-                  <p className="text-sm mb-2 text-gray-600">
-                    The 6-Pack includes two black, two white, lorem lorem
-                  </p>
-                  <p className="text-sm mb-2 text-gray-600">
-                    The 6-Pack includes two black, two white, lorem lorem
-                  </p>
-                  <p className="text-sm mb-2 text-gray-600">
-                    The 6-Pack includes two black, two white, lorem lorem
-                  </p>
-                  <p className="text-sm mb-2 text-gray-600">
-                    The 6-Pack includes two black, two white, lorem lorem
-                  </p>
+                  ))
+                }
+                </>
+                :"---------------"
+               }
+                 
                 </div>
               </div>
             </div>
@@ -378,10 +408,11 @@ function ProductDetailDesign() {
         </div>
       </div>
 
-      <div className="mt-[-60px] w-90 mr-4 ml-4  bg-slate-500 h-0.5"></div>
+      <div className="mt-[-60px] w-90 mr-4 ml-4  bg-slate-200 h-0.5"></div>
       <br />
 
-      <ProductCardHome productHeaderName="Related Product" /><br /><br />
+      <ProductCardHome productHeaderName="Related Product" />
+      <br /><br />
 
             
 
@@ -636,8 +667,8 @@ function ProductDetailDesign() {
             <div className="mb-6 md:mb-0">
               <a href="https://flowbite.com/" className="flex items-center">
                 <img
-                  src={logoRemove}
-                  className="h-12 me-3 rounded-full"
+                  src={logoR}
+                  className="h-12 me-3 "
                   alt="FlowBite Logo"
                 />
                 <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>

@@ -28,10 +28,21 @@ export const allProductsAPI = async() =>{
     }
 }
 
+export const publicDashboardAPI = async()=>{
+    try {
+        const response = await axios.get(`${productBaseURl}/public-dashboard`)
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
+
+
+
 export const productDetailAPI = async(id) =>{
     try {
         
-        const response = await axios.get(`${productBaseURl}/${id}`)
+        const response = await axios.get(`${productBaseURl}/product/${id}`)
         return response.data
 
     } catch (error) {
