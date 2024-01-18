@@ -29,7 +29,6 @@ import Contactus from "./components/public/Contactus.jsx"
 import PageNotFound from "./components/utils/PageNotFound.jsx"
 import SoloProduct from './components/product/soloproduct/SoloProduct.jsx'
 import SearchBar from './components/utils/SearchBar.jsx'
-import CountDown from './components/utils/CountDown.jsx'
 
 
 function App() {

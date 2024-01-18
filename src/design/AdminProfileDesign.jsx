@@ -1,12 +1,31 @@
 import React, { useState } from "react";
 import adminImage from "../assets/image/adminImage.png";
 import adminImage02 from "../assets/image/adminImage02.png";
-function AdminProfileDesign() {
+import { adminLogoutAPI } from "../components/api/adminApi";
+import { useNavigate } from "react-router-dom";
+function AdminProfileDesign({username,email}) {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate("")
 
   const togglePasswordPopup = () => {
     setShowPassword(!showPassword);
   };
+
+  function handleAdminLogout() {
+    adminLogoutAPI()
+      .then((data) => {
+        console.log(data);
+        localStorage.clear();
+        navigate("/")
+        window.location.reload();
+
+      })
+      .catch((err) => {
+        console.log("error: " + err);
+      });
+  }
+
+
   return (
     <div>
       <br />
@@ -37,8 +56,8 @@ function AdminProfileDesign() {
           />
           <div class="text-center space-y-2 sm:text-left">
             <div class="space-y-0.5">
-              <p class="text-lg text-black font-semibold">Ravi123 </p>
-              <p class="text-lg text-black font-semibold">Ravi@gmail.com </p>
+              <p class="text-lg text-black font-semibold">{username} </p>
+              <p class="text-lg text-black font-semibold">{email} </p>
               <p class="text-slate-500 font-medium">Admin</p>
             </div>
           </div>
@@ -55,7 +74,7 @@ function AdminProfileDesign() {
       <div className="w-[93%] md:w-[80%] flex flex-col justify-center items-center gap-4 mb-10 ">
     
 
-        <button className="bg-red-500 p-2 font-semibold  w-40 text-black rounded-lg hover:bg-red-700">
+        <button onClick={handleAdminLogout} className="bg-red-500 p-2 font-semibold  w-40 text-black rounded-lg hover:bg-red-700">
           Logout
         </button>
 

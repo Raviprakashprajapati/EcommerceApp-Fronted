@@ -1,8 +1,103 @@
-import React from "react";
+import React, { useState } from "react";
 import adminImage02 from "../../assets/image/adminImage02.png";
+import CountDown from "../utils/CountDown";
+import { useNavigate } from "react-router-dom";
+import { adminAddProductAPI } from "../api/adminApi";
 function AdminAddProduct() {
+
+  const [data,setData] = useState({
+    name:"",
+    price:"",
+    discount:"",
+    category:"", //eletronics,clothing,
+    title:"",
+    subCategory:"",
+    features:"",
+    brand:"",
+    keywords:"",
+    description:"",
+    warranty:0,
+    age:"",
+    trending:"",
+    hype:"",
+    offer:"",
+    stock:"",
+    rating:"",
+  })
+  const [image01,setImage01]  = useState(null)
+  const [image02,setImage02]  = useState(null)
+  const [image03,setImage03]  = useState(null)
+  const [error,setError] = useState(false)
+  const [modelOpen,setModelOpen] = useState(false)
+  const navigate = useNavigate()
+  
+    const closeModal=()=>{
+      setModelOpen(false)
+    }
+
+  function handleChange(e){
+      const {name,value} = e.target
+      setData( (pre)=>({
+        ...pre,
+        [name]:value,
+      }) )
+  }
+
+  function handleImage1(e){
+    setImage01(e.target.files[0])
+  }
+  function handleImage2(e){
+    setImage02(e.target.files[0])
+  }
+  function handleImage3(e){
+    setImage03(e.target.files[0])
+  }
+
+ async function handleSubmit(e){
+    e.preventDefault()
+    if(image01 && image02 && image03){
+      setError(false)
+      setModelOpen(true) 
+      // console.log(data)
+      const formData = new FormData()
+      for (const key in data) {
+        if(!(key=='title')){
+          
+          formData.append(key,data[key])
+        }
+        else{
+
+          formData.append(key,Number.parseInt(data[key]))
+        }
+        if(key=='rating')
+        {
+          formData.append(key,Number.parseInt(data[key]))
+
+        }
+      }
+      formData.append("image01",image01)
+      formData.append("image02",image02)
+      formData.append("image03",image03)
+      
+        console.log(formData)
+      const response = await adminAddProductAPI(formData)
+      // console.log(response)
+      navigate("/admin/profile")
+
+    }else{
+      setError(true)
+    }
+    
+    
+  }
+
+
   return (
     <div>
+
+       {/* COUNTDOWN */}
+    {modelOpen && <CountDown onClose={closeModal} timer={15} />}
+       
       <br />
       <br />
       <div className="w-[80%] m-auto ">
@@ -24,7 +119,7 @@ function AdminAddProduct() {
         {/* <!-- Small statement on top --> */}
 
         {/* <!-- Form with labels and input boxes --> */}
-        <form className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <form className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3" onSubmit={handleSubmit} >
          
           {/* name */}
           <div className="mb-4">
@@ -41,6 +136,8 @@ function AdminAddProduct() {
               name="name"
               placeholder="Enter product name"
               required
+              value={data.name}
+              onChange={handleChange}
             />
           </div>
 
@@ -56,9 +153,11 @@ function AdminAddProduct() {
               className="w-full px-3 py-2 border rounded-md"
               type="text"
               id="Price"
-              name="Price"
+              name="price"
               placeholder="Enter product price"
               required
+              value={data.price}
+              onChange={handleChange}
             />
           </div>
 
@@ -74,8 +173,30 @@ function AdminAddProduct() {
               className="w-full px-3 py-2 border rounded-md"
               type="text"
               id="Brand"
-              name="Brand"
+              name="brand"
+              value={data.brand}
+              onChange={handleChange}
               placeholder="Enter product brand"
+              required
+            />
+          </div>
+
+            {/* title */}
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              for="title"
+            >
+              Title:
+            </label>
+            <input
+              className="w-full px-3 py-2 border rounded-md"
+              type="text"
+              id="title"
+              name="title"
+              value={data.title}
+              onChange={handleChange}
+              placeholder="The latest iPhone featuring advanced technology and stunning design"
               required
             />
           </div>
@@ -93,6 +214,8 @@ function AdminAddProduct() {
               type="text"
               id="discount"
               name="discount"
+              value={data.discount}
+              onChange={handleChange}
               placeholder="Min.50% Off OR Up to 70% Off "
               required
             />
@@ -106,12 +229,14 @@ function AdminAddProduct() {
             >
               Category:
             </label>
-            <p className="text-[0.8rem]" >[electronics clothing furniture beauty book sports toys health software]</p>
+            <p className="text-[0.8rem]" >[electronics clothing , furniture beauty book sports toys health software]</p>
             <input
               className="w-full px-3 py-2 border rounded-md"
               type="text"
               id="category"
               name="category"
+              value={data.category}
+              onChange={handleChange}
               placeholder=""
               required
             />
@@ -129,7 +254,9 @@ function AdminAddProduct() {
               className="w-full px-3 py-2 border rounded-md"
               type="text"
               id="subcategory"
-              name="subcategory"
+              name="subCategory"
+              value={data.subCategory}
+              onChange={handleChange}
               placeholder="phone"
               required
             />
@@ -148,6 +275,8 @@ function AdminAddProduct() {
               type="text"
               id="warranty"
               name="warranty"
+              value={data.warranty}
+              onChange={handleChange}
               placeholder="1 or 2"
               required
             />
@@ -168,6 +297,8 @@ function AdminAddProduct() {
               name="age"
               placeholder="new or old"
               required
+              value={data.age}
+              onChange={handleChange}
             />
           </div>
 
@@ -184,6 +315,8 @@ function AdminAddProduct() {
               type="text"
               id="trending"
               name="trending"
+              value={data.trending}
+              onChange={handleChange}
               placeholder="true or false"
               required
             />
@@ -203,6 +336,8 @@ function AdminAddProduct() {
               type="text"
               id="keywords"
               name="keywords"
+              value={data.keywords}
+              onChange={handleChange}
               placeholder=""
               required
             />
@@ -221,6 +356,28 @@ function AdminAddProduct() {
               type="text"
               id="hype"
               name="hype"
+              value={data.hype}
+              onChange={handleChange}
+              placeholder="true or false"
+              required
+            />
+          </div>
+
+          {/* rating */}
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              for="rating"
+            >
+              Rating:
+            </label>
+            <input
+              className="w-full px-3 py-2 border rounded-md"
+              type="text"
+              id="rating"
+              name="rating"
+              value={data.rating}
+              onChange={handleChange}
               placeholder="true or false"
               required
             />
@@ -239,6 +396,8 @@ function AdminAddProduct() {
               type="text"
               id="stock"
               name="stock"
+              value={data.stock}
+              onChange={handleChange}
               placeholder="1 or 10"
               required
             />
@@ -256,6 +415,8 @@ function AdminAddProduct() {
               className="w-full px-3 py-2 border rounded-md min-h-10 max-h-40"
               id="features"
               name="features"
+              value={data.features}
+              onChange={handleChange}
               placeholder="128 GB ROM\n"
               required
             
@@ -274,9 +435,11 @@ function AdminAddProduct() {
             <textarea
               className="w-full px-3 py-2 border rounded-md min-h-10 max-h-40"
               id="Offer"
-              name="Offer"
+              name="offer"
               placeholder="1. offer\n2. offwe2"
               required
+              value={data.offer}
+              onChange={handleChange}
             
               
             ></textarea>
@@ -293,10 +456,11 @@ function AdminAddProduct() {
             <textarea
               className="w-full px-3 py-2 border rounded-md min-h-10 max-h-40"
               id="Description"
-              name="Description"
+              name="description"
               placeholder="1. example\n2. example"
               required
-            
+              value={data.description}
+              onChange={handleChange}
               
             ></textarea>
           </div>
@@ -306,15 +470,15 @@ function AdminAddProduct() {
           <div>
           <div className="image1">
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input1">Upload Image1</label>
-          <input  required className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input1" type="file"/>
+          <input  required className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input1" type="file" onChange={handleImage1}  />
           </div>
           <div className="image2 mt-3">
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input2">Upload Image2</label>
-          <input required className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input2" type="file"/>
+          <input required className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input2" type="file" onChange={handleImage2}  />
           </div>
           <div className="image3 mt-3">
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input3">Upload Image3</label>
-          <input required className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input3" type="file"/>
+          <input required className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input3" type="file" onChange={handleImage3}  />
           </div>
           </div>
           <br />
@@ -344,10 +508,19 @@ function AdminAddProduct() {
           </label>
         </div>
 
+    {
+      error?
+      <p className="text-red-400 text-center tetx-sm">All Fields required</p>
+
+      :
+      null
+    }
+
 
         <button
           type="submit"
           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          // onClick={handle}
         >
           Submit
         </button>

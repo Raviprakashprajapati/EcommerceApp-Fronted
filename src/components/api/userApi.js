@@ -41,11 +41,6 @@ export const  registerUserAPI = async(userData) =>{
 }
 
 
-
-
-
-//later
-
 export const  changeUserPasswordAPI = async(data) =>{
     try {
 

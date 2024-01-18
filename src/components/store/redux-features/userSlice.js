@@ -1,11 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {  createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     currentUser:JSON.parse(localStorage.getItem("user")) || null,
     
 }
 
-export const fetchUser = createAsyncThunk()
 
 export const userSlice = createSlice({
     name:"user",

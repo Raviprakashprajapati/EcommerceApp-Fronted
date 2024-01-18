@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-function CountDown({onClose}) {
+function CountDown({onClose,timer=8}) {
 
-    const [countdown, setCountdown] = useState(8);
+    const [countdown, setCountdown] = useState(timer);
 
     useEffect(() => {
       const timer = setInterval(() => {

@@ -48,11 +48,11 @@ function Signup() {
         formData.append('password', password);
         formData.append('contact', contact);
         formData.append('address', address);
-  
+        
         if(avatar){
           formData.append('profileImage', avatar);
         }
-  
+        console.log(formData)
         const response = await registerUserAPI(formData)
         console.log(response)
 
