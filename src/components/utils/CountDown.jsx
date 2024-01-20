@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function CountDown({onClose,timer=8}) {
+function CountDown({onClose,timer=10}) {
 
     const [countdown, setCountdown] = useState(timer);
 
@@ -49,9 +49,25 @@ export default CountDown
 //   setModelOpen(false)
 // }
 
-
 // setModelOpen(true) after api IF
 
  {/* COUNTDOWN */}
 //  {modelOpen && <CountDown onClose={closeModal} />}
        
+
+
+
+
+
+// const [CountTimer,setCountTimer] = useState(false)
+
+
+// const closeCountTimer=()=>{
+//   setCountTimer(false)
+// }
+
+// setCountTimer(true)
+
+  {/* COUNTDOWN */}
+  // {CountTimer && <CountDown onClose={closeCountTimer}  />}
+        

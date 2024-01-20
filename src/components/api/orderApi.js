@@ -19,7 +19,7 @@ export const ordersUserAPI = async() =>{
 export const orderDetailAPI = async(id) =>{
     try {
 
-        const response = await axios.get(`${orderBaseURL}/${id}`)
+        const response = await axios.get(`${orderBaseURL}/get-orders/${id}`)
         return response.data
         
     } catch (error) {
@@ -31,7 +31,7 @@ export const orderDetailAPI = async(id) =>{
 export const addOrderAPI = async(data) =>{
     try {
         //{productId,quantity}
-        const response = await axios.post(`${orderBaseURL}`,data)
+        const response = await axios.post(`${orderBaseURL}/add-order`,data)
         return response.data
         
     } catch (error) {

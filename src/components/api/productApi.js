@@ -53,7 +53,7 @@ export const productDetailAPI = async(id) =>{
 export const productReviewsAPI = async(productId) =>{
     try {
 
-        const response = await axios.get(`${productId}/reviews`,productId)
+        const response = await axios.get(`${productBaseURl}/reviews/${productId}`)
         return response.data
         
     } catch (error) {

@@ -2,9 +2,9 @@ import axios from "axios";
 
 const userBaseURL = '/api/v1/users'
 
-export const getCurrentUserAPI = async(username) =>{
+export const getCurrentUserAPI = async(id) =>{
     try {
-        const response = await axios.get(`${userBaseURL}/${username}`)
+        const response = await axios.get(`${userBaseURL}/current-user/${id}`)
         return response.data
         
     } catch (error) {

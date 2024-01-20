@@ -13,8 +13,6 @@ export const cartsUserAPI = async()=>{
     }
 }
 
-//later
-
 export const addToCartAPI = async(id) =>{
     try {
 
@@ -26,6 +24,7 @@ export const addToCartAPI = async(id) =>{
     }
 }
 
+
 export const removeProductFromCartAPI = async(id) =>{
     try {
 
@@ -36,6 +35,10 @@ export const removeProductFromCartAPI = async(id) =>{
         throw error
     }
 }
+
+
+//later
+
 
 export const incrementProductFromCartAPI = async(productId) =>{
     try {
@@ -51,7 +54,7 @@ export const incrementProductFromCartAPI = async(productId) =>{
 export const decrementProductFromCartAPI = async(productIdForDecrement) =>{
     try {
 
-        const response = await axios.patch(`${productBaseURL}`,productIdForDecrement)
+        const response = await axios.patch(`${productBaseURL}/decrement-cart`,productIdForDecrement)
         return response.data
         
     } catch (error) {

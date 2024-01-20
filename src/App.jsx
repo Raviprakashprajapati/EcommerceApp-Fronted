@@ -33,9 +33,9 @@ import SearchBar from './components/utils/SearchBar.jsx'
 
 function App() {
 
- 
+  
 
-
+  
   return (
     <Provider store={store} >
     <BrowserRouter>
@@ -60,7 +60,7 @@ function App() {
     <Route path='/update-password' element={<ChangePassword/>} />
 
     {/* ORDER */}
-    <Route path="/order/" element={<AllOrders/>} />
+    <Route path="/order" element={<AllOrders/>} />
     <Route path="/order-details/:orderId" element={<OrderDetails/>}   />
 
     {/* PRODUCT */}

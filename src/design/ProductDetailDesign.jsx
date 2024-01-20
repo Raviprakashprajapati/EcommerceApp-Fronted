@@ -3,15 +3,41 @@ import ProductCardHome from "./ProductCardHome";
 import logoR from "../assets/image/logoR.png";
 import { searchProductByReqAPI } from "../components/api/searchApi";
 
+import { toast } from "react-toastify";
+import { addProductReviewAPI, productReviewsAPI } from "../components/api/productApi";
+import { getDate } from "../components/utils/randomFunciton";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../components/store/redux-features/userSlice";
+import CustomToast from "../components/utils/CustomToast";
+import { addOrderAPI } from "../components/api/orderApi";
+import { useNavigate } from "react-router-dom";
+import { addToCartAPI } from "../components/api/cartApi";
+import { getCurrentUserAPI } from "../components/api/userApi";
+import CountDown from "../components/utils/CountDown";
+
 function ProductDetailDesign({detail}) {
+
+  const navigate= useNavigate()
+  const notify = () => toast("Login First 😊");
+  const notifyOutofstock =()=>toast("Out of stock")
+  const user = useSelector(selectCurrentUser)
+  const [reviews,setReviews] = useState(null)
+  const [inputReviewComment,setInputReviewComment] = useState("")
+  const [inputReviewStar,setInputReviewStar] = useState(1)
   const [windowSize, setWindowSize] = useState(window.innerWidth);
   const [isModalOpen, setModalOpen] = useState(false);
   const [f,setF] = useState(null)
   const [d,setD] = useState(null)
   const [o,setO] = useState(null)
-  
-  console.log(detail)
+  const [CountTimer,setCountTimer] = useState(false)
 
+
+  const closeCountTimer=()=>{
+    setCountTimer(false)
+  }
+
+  
+  //window width
   useEffect(() => {
     const handleResize = () => {
       setWindowSize(window.innerWidth);
@@ -26,19 +52,7 @@ function ProductDetailDesign({detail}) {
     };
   }, []);
 
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
-  const handleModalClick = (e) => {
-    // Stop propagation to prevent the modal from closing when clicking inside it
-    e.stopPropagation();
-  };
-
+  //features and desc Formatting
   useEffect(()=>{
 
     if(detail?.features=="null")
@@ -56,7 +70,7 @@ function ProductDetailDesign({detail}) {
     //related api
     searchProductByReqAPI({subCategory:detail?.subCategory})
     .then((data)=>{
-      console.log("related data : " + data.data)
+      // console.log("related data : " + data.data)
     })
     .catch((err)=>{
       console.log("error : " + err)
@@ -66,17 +80,115 @@ function ProductDetailDesign({detail}) {
 
   },[])
 
+  // reviews API
+  useEffect(()=>{
+
+   
+    productReviewsAPI(detail?._id)
+    .then((data)=>{
+      // console.log(data)
+      if(data?.data?.length>0){
+        setReviews(data?.data)
+        // console.log(reviews)
+      }
+    })
+    .catch((err)=>{
+      console.log("error in review : " + err)
+    })
+
+  },[])
+
+
 
   
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleModalClick = (e) => {
+    // Stop propagation to prevent the modal from closing when clicking inside it
+    e.stopPropagation();
+  };
+
+  function handleAddReview(e){
+    e.preventDefault()
+    if(inputReviewComment && inputReviewStar){
+        if(inputReviewStar>6){
+        }else if(0<inputReviewStar){
+
+          addProductReviewAPI({productId:detail?._id,comment:inputReviewComment,rating:inputReviewStar})
+          .then((data)=>{
+            console.log(data)
+            window.location.reload()
+          })
+          .catch((err)=>{
+            console.log("Err ",err)
+          })
+
+        }
+    }
+  }
+
+  function handleBuyNow(){
+
+    addOrderAPI({productId:detail?._id,quantity:1})
+    .then((data)=>{
+      setCountTimer(true)
+      if(data){
+       
+        getCurrentUserAPI(user?._id)
+        .then((data)=>{
+          localStorage.setItem('user',JSON.stringify(data.data))
+          console.log("cart ",data)
+          navigate("/order")
+          window.location.reload()
+        
+        })
+      }
+
+    })
+    .catch((err)=>{
+      console.log("error in buy now ",err)
+    })
+
+  }
+
+  function handleAddToCart(){
+
+    addToCartAPI(detail?._id)
+    .then((data)=>{
+      
+    setCountTimer(true)
+      if(data){
+        getCurrentUserAPI(user?._id)
+        .then((data)=>{
+          localStorage.setItem('user',JSON.stringify(data.data))
+          console.log("cart ",data)
+        navigate("/cart")
+        window.location.reload()
+        })
 
 
-  
+        
+      }
+    })
+    .catch((err)=>{
+      console.log("err while add to cart", err)
+    })
 
-
+  }
 
 
   return (
     <>
+
+     {/* COUNTDOWN */}
+  {CountTimer && <CountDown onClose={closeCountTimer}  />}
+        
 
       {/* detail */}
       <div className="bg-white">
@@ -273,22 +385,71 @@ function ProductDetailDesign({detail}) {
               </div>
 
               {/* buy */}
+            {
+              user?             
+            <>
+            {
+              detail?.stock>0?
               <button
+              onClick={handleBuyNow}
+             type="submit"
+             className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-green-400 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+           >
+             Buy Now
+           </button>:
+              <button
+              
+             type="submit"
+             className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-green-400 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+             onClick={notifyOutofstock}
+           >
+             Buy Now 
+           </button>
+            }
+            </>
+            :             
+             <button
+              onClick={notify}
                 type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-green-400 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
                 Buy Now
               </button>
+            }
 
               {/* cart */}
-
+              {
+                user?
+                <>
+                {
+                  detail?.stock>0?
+                  <button
+                  type="submit"
+                  className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-green-400 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  onClick={handleAddToCart}
+  
+                >
+                  Add to Cart
+                </button>:<button
+                  type="submit"
+                  className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-green-400 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  onClick={notifyOutofstock}
+  
+                >
+                  Add to Cart
+                </button>
+                }
+                </>:
               <button
                 type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-green-400 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                onClick={notify}
 
               >
                 Add to Cart
               </button>
+              }
+
 
               <div className="mt-8 border p-4">
                 <h3 className="text-2xl mb-3 font-medium text-gray-900">
@@ -360,12 +521,12 @@ function ProductDetailDesign({detail}) {
                         {
                           d.map((i,index)=>(
                             <>
-                            <tr key={index} className="bg-slate-200   mb-2 dark:bg-gray-800  ">
-                        <td className="px-2 py-2 md:text-sm rounded-lg text-black text-[0.78rem] font-medium ">
+                            <tr key={index} className="bg-slate-200    dark:bg-gray-800  ">
+                        <td className="px-2 py-2 md:text-sm rounded-lg  text-black text-[0.78rem] font-medium ">
                         {i}
                         </td>
-                      </tr>
-                      <br />
+                      </tr><br />
+                      
                             </>
                           ))
                         }
@@ -408,6 +569,8 @@ function ProductDetailDesign({detail}) {
         </div>
       </div>
 
+      
+
       <div className="mt-[-60px] w-90 mr-4 ml-4  bg-slate-200 h-0.5"></div>
       <br />
 
@@ -427,20 +590,32 @@ function ProductDetailDesign({detail}) {
 
           {/* Button to open the modal */}
           <div className="m-auto">
-            <button
+            {
+              user?<button
               className="bg-slate-200 p-2 rounded-lg hover:bg-slate-400  "
               onClick={openModal}
             >
             
              📝 add review
-            </button>
+            </button>:
+           <>
+            <button
+            className="bg-slate-200 p-2 rounded-lg hover:bg-slate-400  "
+            onClick={notify}
+          >
+          
+           📝 add review
+          </button>
+         
+           </>
+            }
           </div>
 
           <a
             href="#"
             className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500 flex justify-center mt-2 "
           >
-            117 reviews
+            {reviews?.length || 0} reviews
           </a>
 
           
@@ -451,207 +626,42 @@ function ProductDetailDesign({detail}) {
         <div className="mt-4 m-auto md:w-2/3  flex flex-col justify-center  overflow-y-auto   max-h-[400px] space-y-2   ">
           {/* per user */}
 
-          <div className="flex   rounded-lg mb-2  mr-2 ml-2  items-start gap-2.5 bg-slate-400 p-4">
-            <img
-              className="w-8 h-8 rounded-full"
-              src="https://img.freepik.com/free-vector/happy-middle-age-man-cartoon-head_1308-134364.jpg?w=360&t=st=1704785963~exp=1704786563~hmac=a3da490011cc04279884fd669c8fc0424faf59f2f0c141f023edd90d1ca8dc28"
-              alt="Jese image"
-            />
-            <div className="flex flex-col w-full max-w-[320px] leading-1.5">
-              <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                <span className="text-sm font-semibold text-gray-900 dark:text-white">
-                  Bonnie Green
-                </span>
-                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                  11:46
-                </span>
-              </div>
-              <p className="text-sm font-normal py-2 text-gray-900 dark:text-white">
-                {" "}
-                That's awesome. I think our product is really very appreciate
-                and amazing features
-              </p>
-              <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                Delivered
-              </span>
-            </div>
-          </div>
-          <div className="flex   rounded-lg mb-2  mr-2 ml-2  items-start gap-2.5 bg-slate-400 p-4">
-            <img
-              className="w-8 h-8 rounded-full"
-              src="https://img.freepik.com/free-vector/happy-middle-age-man-cartoon-head_1308-134364.jpg?w=360&t=st=1704785963~exp=1704786563~hmac=a3da490011cc04279884fd669c8fc0424faf59f2f0c141f023edd90d1ca8dc28"
-              alt="Jese image"
-            />
-            <div className="flex flex-col w-full max-w-[320px] leading-1.5">
-              <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                <span className="text-sm font-semibold text-gray-900 dark:text-white">
-                  Bonnie Green
-                </span>
-                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                  11:46
+         {
+          reviews?
+          <>
+          {
+            reviews.map((i)=>(
+              <div className="flex   rounded-lg mb-2  mr-2 ml-2  items-start gap-2.5 bg-slate-200 p-4">
+              <img
+                className="w-8 h-8 rounded-full"
+                src={i?.reviewsDetails?.userImage || "https://img.freepik.com/free-vector/happy-middle-age-man-cartoon-head_1308-134364.jpg?w=360&t=st=1704785963~exp=1704786563~hmac=a3da490011cc04279884fd669c8fc0424faf59f2f0c141f023edd90d1ca8dc28"}
+                alt="Jese image"
+              />
+              <div className="flex flex-col w-full max-w-[320px] leading-1.5">
+                <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                  <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                    {i?.reviewsDetails?.name}
+                  </span>
+                  <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
+                    {getDate(i?.reviewsDetails?.createdAt)}
+                  </span>
+                </div>
+                <p className="text-sm font-normal py-2 text-gray-900 dark:text-white">
+                  {" "}
+                  {i?.reviewsDetails?.comment}
+                </p>
+                <span className="text-sm font-bold text-black">
+                  Rating : {i?.reviewsDetails?.rating}
                 </span>
               </div>
-              <p className="text-sm font-normal py-2 text-gray-900 dark:text-white">
-                {" "}
-                That's awesome. I think our product is really very appreciate
-                and amazing features
-              </p>
-              <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                Delivered
-              </span>
             </div>
-          </div>
-          <div className="flex   rounded-lg mb-2  mr-2 ml-2  items-start gap-2.5 bg-slate-400 p-4">
-            <img
-              className="w-8 h-8 rounded-full"
-              src="https://img.freepik.com/free-vector/happy-middle-age-man-cartoon-head_1308-134364.jpg?w=360&t=st=1704785963~exp=1704786563~hmac=a3da490011cc04279884fd669c8fc0424faf59f2f0c141f023edd90d1ca8dc28"
-              alt="Jese image"
-            />
-            <div className="flex flex-col w-full max-w-[320px] leading-1.5">
-              <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                <span className="text-sm font-semibold text-gray-900 dark:text-white">
-                  Bonnie Green
-                </span>
-                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                  11:46
-                </span>
-              </div>
-              <p className="text-sm font-normal py-2 text-gray-900 dark:text-white">
-                {" "}
-                That's awesome. I think our product is really very appreciate
-                and amazing features
-              </p>
-              <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                Delivered
-              </span>
-            </div>
-          </div>
-          <div className="flex   rounded-lg mb-2  mr-2 ml-2  items-start gap-2.5 bg-slate-400 p-4">
-            <img
-              className="w-8 h-8 rounded-full"
-              src="https://img.freepik.com/free-vector/happy-middle-age-man-cartoon-head_1308-134364.jpg?w=360&t=st=1704785963~exp=1704786563~hmac=a3da490011cc04279884fd669c8fc0424faf59f2f0c141f023edd90d1ca8dc28"
-              alt="Jese image"
-            />
-            <div className="flex flex-col w-full max-w-[320px] leading-1.5">
-              <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                <span className="text-sm font-semibold text-gray-900 dark:text-white">
-                  Bonnie Green
-                </span>
-                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                  11:46
-                </span>
-              </div>
-              <p className="text-sm font-normal py-2 text-gray-900 dark:text-white">
-                {" "}
-                That's awesome. I think our product is really very appreciate
-                and amazing features
-              </p>
-              <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                Delivered
-              </span>
-            </div>
-          </div>
-          <div className="flex   rounded-lg mb-2  mr-2 ml-2  items-start gap-2.5 bg-slate-400 p-4">
-            <img
-              className="w-8 h-8 rounded-full"
-              src="https://img.freepik.com/free-vector/happy-middle-age-man-cartoon-head_1308-134364.jpg?w=360&t=st=1704785963~exp=1704786563~hmac=a3da490011cc04279884fd669c8fc0424faf59f2f0c141f023edd90d1ca8dc28"
-              alt="Jese image"
-            />
-            <div className="flex flex-col w-full max-w-[320px] leading-1.5">
-              <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                <span className="text-sm font-semibold text-gray-900 dark:text-white">
-                  Bonnie Green
-                </span>
-                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                  11:46
-                </span>
-              </div>
-              <p className="text-sm font-normal py-2 text-gray-900 dark:text-white">
-                {" "}
-                That's awesome. I think our product is really very appreciate
-                and amazing features
-              </p>
-              <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                Delivered
-              </span>
-            </div>
-          </div>
-          <div className="flex   rounded-lg mb-2  mr-2 ml-2  items-start gap-2.5 bg-slate-400 p-4">
-            <img
-              className="w-8 h-8 rounded-full"
-              src="https://img.freepik.com/free-vector/happy-middle-age-man-cartoon-head_1308-134364.jpg?w=360&t=st=1704785963~exp=1704786563~hmac=a3da490011cc04279884fd669c8fc0424faf59f2f0c141f023edd90d1ca8dc28"
-              alt="Jese image"
-            />
-            <div className="flex flex-col w-full max-w-[320px] leading-1.5">
-              <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                <span className="text-sm font-semibold text-gray-900 dark:text-white">
-                  Bonnie Green
-                </span>
-                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                  11:46
-                </span>
-              </div>
-              <p className="text-sm font-normal py-2 text-gray-900 dark:text-white">
-                {" "}
-                That's awesome. I think our product is really very appreciate
-                and amazing features
-              </p>
-              <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                Delivered
-              </span>
-            </div>
-          </div>
-          <div className="flex   rounded-lg mb-2  mr-2 ml-2  items-start gap-2.5 bg-slate-400 p-4">
-            <img
-              className="w-8 h-8 rounded-full"
-              src="https://img.freepik.com/free-vector/happy-middle-age-man-cartoon-head_1308-134364.jpg?w=360&t=st=1704785963~exp=1704786563~hmac=a3da490011cc04279884fd669c8fc0424faf59f2f0c141f023edd90d1ca8dc28"
-              alt="Jese image"
-            />
-            <div className="flex flex-col w-full max-w-[320px] leading-1.5">
-              <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                <span className="text-sm font-semibold text-gray-900 dark:text-white">
-                  Bonnie Green
-                </span>
-                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                  11:46
-                </span>
-              </div>
-              <p className="text-sm font-normal py-2 text-gray-900 dark:text-white">
-                {" "}
-                That's awesome. I think our product is really very appreciate
-                and amazing features
-              </p>
-              <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                Delivered
-              </span>
-            </div>
-          </div>
-          <div className="flex   rounded-lg mb-2  mr-2 ml-2  items-start gap-2.5 bg-slate-400 p-4">
-            <img
-              className="w-8 h-8 rounded-full"
-              src="https://img.freepik.com/free-vector/happy-middle-age-man-cartoon-head_1308-134364.jpg?w=360&t=st=1704785963~exp=1704786563~hmac=a3da490011cc04279884fd669c8fc0424faf59f2f0c141f023edd90d1ca8dc28"
-              alt="Jese image"
-            />
-            <div className="flex flex-col w-full max-w-[320px] leading-1.5">
-              <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                <span className="text-sm font-semibold text-gray-900 dark:text-white">
-                  Bonnie Green
-                </span>
-                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                  11:46
-                </span>
-              </div>
-              <p className="text-sm font-normal py-2 text-gray-900 dark:text-white">
-                {" "}
-                That's awesome. I think our product is really very appreciate
-                and amazing features
-              </p>
-              <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                Delivered
-              </span>
-            </div>
-          </div>
-
+            ))
+          }
+          
+          </>:null
+         }
+          
+         
           {/* end of per user review */}
         </div>
 
@@ -840,6 +850,12 @@ function ProductDetailDesign({detail}) {
         </div>
       </footer>
 
+         <CustomToast/>
+      
+
+
+
+
       {/* REVIEWS DIV */}
       <div>
         {/* Modal */}
@@ -847,6 +863,7 @@ function ProductDetailDesign({detail}) {
           <div
             className="fixed top-0 right-0 left-0 z-50 flex items-center justify-center h-screen bg-gray-800 bg-opacity-50"
             onClick={closeModal}
+          
           >
             <div
               className="relative bg-white rounded-lg shadow p-5 w-full max-w-md"
@@ -879,6 +896,8 @@ function ProductDetailDesign({detail}) {
                     placeholder="Enter your review"
                     className="max-h-24 form-input w-full rounded-lg"
                     required
+                    value={inputReviewComment}
+                    onChange={(e)=>setInputReviewComment(e.target.value)}
                   />
                 </div>
 
@@ -891,19 +910,12 @@ function ProductDetailDesign({detail}) {
                     Rate the product
                   </label>
                   <div className="flex items-center">
-                    {[1, 2, 3, 4, 5].map((value) => (
-                      <label key={value} className="mr-2 cursor-pointer">
-                        <input
-                          type="radio"
-                          name="radio"
-                          id={`rating-${value}`}
-                          value={value}
-                          className="sr-only"
-                          required
-                        />
-                        <span className="text-2xl">&#9733;</span>
-                      </label>
-                    ))}
+                   <input type="text"
+                    placeholder="1 - 5 Star"
+                    value={inputReviewStar}
+                    onChange={(e)=>setInputReviewStar(
+                    e.target.value)}
+                   />
                   </div>
                 </div>
 
@@ -911,6 +923,7 @@ function ProductDetailDesign({detail}) {
                 <button
                   type="submit"
                   className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                  onClick={handleAddReview}
                 >
                   Add Review
                 </button>
@@ -920,6 +933,14 @@ function ProductDetailDesign({detail}) {
         )}
       </div>
 
+
+                      
+
+      
+
+
+
+                          
 
 
     </>

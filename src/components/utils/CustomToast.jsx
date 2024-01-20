@@ -1,5 +1,5 @@
 import React from 'react'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -27,3 +27,12 @@ function CustomToast() {
 }
 
 export default CustomToast
+
+
+
+
+// import { toast } from "react-toastify";
+
+// const notify = () => toast("Login First 😊");
+// btn onclick={notify}
+{/* <CustomToast> */}
