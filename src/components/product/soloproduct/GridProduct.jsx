@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
+  searchProductByAny,
     searchProductByClothing,
   searchProductByEletronics,
   searchProductByReqAPI,
 } from "../../api/searchApi";
+import Loader from "../../utils/Loader";
 
 function GridProduct() {
   const [product, SetProduct] = useState(null);
@@ -36,6 +38,33 @@ function GridProduct() {
           .catch((err) => {
             console.log("err in eletronincs search ", err);
           });
+
+    }
+    else if(category.includes("Apple")){
+      console.log(category)
+      searchProductByAny({brand:category})
+      .then((data) => {
+          if (data) {
+            console.log(data);
+            SetProduct(data.data);
+          }
+        })
+        .catch((err) => {
+          console.log("err in apple search ", err);
+        });
+
+    }
+    else if(category.includes("zara")){
+      searchProductByAny({brand:category})
+      .then((data) => {
+          if (data) {
+            console.log(data.data);
+            SetProduct(data.data);
+          }
+        })
+        .catch((err) => {
+          console.log("err in eletronincs search ", err);
+        });
 
     }
     else{
@@ -72,16 +101,22 @@ function GridProduct() {
             category.includes("shirt")?
             "Shirts ":
             category.includes("phone")?
-            "Phone ":null
+            "Phone ":
+            category.includes("Apple")?
+            "Apple ":
+            category.includes("zara")?
+            "Zara ":null
           
           
           } Products
         </h4>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {
+        product?.length>0? <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {product?.map((product, index) => (
           <div key={index} className="p-4 bg-white shadow-md rounded-md">
+           <Link to={`/product-details/${product?._id}`} > 
             {/* Replace the content below with your product card component */}
             <div>
               <img
@@ -91,18 +126,20 @@ function GridProduct() {
               />
             </div>
             <h2 className=" font-semibold mb-2 text-center mt-2">
-              {product.name}
+              {product?.name}
             </h2>
             <p className="text-gray-700 text-center">{}</p>
             <div className="mt-2">
-              <p className="text-slate-500 font-bold text-center ">₹ {product.price}</p>
-              <button className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md m-auto">
-                Add to Cart
-              </button>
+              <p className="text-slate-500 font-bold text-center ">₹ {product?.price}</p>
+            <p className="text-center text-sm" >{product?.discount?.includes("null")?null:product.discount}</p>
             </div>
+           </Link>
           </div>
         ))}
-      </div>
+      </div>:<Loader/>
+      }
+
+     
 
     </div>
   );

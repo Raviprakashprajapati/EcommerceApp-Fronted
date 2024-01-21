@@ -8,6 +8,7 @@ import Footer from '../utils/Footer'
 import { allProductsAPI, publicDashboardAPI } from '../api/productApi'
 import { getCurrentUserAPI } from '../api/userApi'
 import { Link } from 'react-router-dom'
+import EletronicProduct from '../product/soloproduct/EletronicProduct'
 
 function Home() {
 
@@ -81,10 +82,10 @@ function Home() {
       {/* SECOND NAVBAR */}
       <nav className="bg-gray-50 dark:bg-gray-700">
         <div className="max-w-screen-xl px-4 py-3 mx-auto">
-          <div className="flex items-center">
-            <ul className="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
+          <div className="flex items-center  overflow-x-auto scrollbar-hide   ">
+            <ul className="flex flex-row  font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
               <li>
-                <Link to={`/category/eletronics`}
+                <Link to={`/searchDetail/eletronics`}
                      className="text-gray-900 dark:text-white hover:underline"
                      >
                 
@@ -123,6 +124,25 @@ function Home() {
                 </Link>
               
               </li>
+
+
+              {/* //later */}
+              <li>
+                <Link to={`/category/Apple`}
+                     className="text-gray-900 dark:text-white hover:underline"
+                     >
+                
+                  Iphone
+                </Link>
+              </li>
+              <li>
+                <Link to={`/category/zara`}
+                     className="text-gray-900 dark:text-white hover:underline"
+                     >
+                
+                  Zara
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -133,11 +153,13 @@ function Home() {
 
       <CarouselBar />
 
+      <div className='md:mb-10' ></div>
       <ProductCardHome data={homeProduct} productHeaderName="Trending Deals" />
 
       <br />
       
-
+      
+      <div className='md:mb-10' ></div>
       <div className="max-w-md mx-auto  rounded-xl shadow-md overflow-hidden md:max-w-2xl border  ">
         <div className="md:flex">
           <div className="md:shrink-0">
@@ -212,7 +234,9 @@ function Home() {
     
     </>
     }
-  
+
+
+   
     </>
   )
 }

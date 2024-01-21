@@ -35,3 +35,14 @@ export const searchProductByClothing = async() =>{
         throw error
     }
 }
+
+
+export const searchProductByAny = async(body) =>{
+    try {
+        const response = await axios.post(`${searchBaseURL}/any`,body)
+        return response.data
+        
+    } catch (error) {
+        throw error
+    }
+}

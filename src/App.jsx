@@ -30,6 +30,7 @@ import PageNotFound from "./components/utils/PageNotFound.jsx"
 import SoloProduct from './components/product/soloproduct/SoloProduct.jsx'
 import SearchBar from './components/utils/SearchBar.jsx'
 import GridProduct from './components/product/soloproduct/GridProduct.jsx'
+import EletronicProduct from './components/product/soloproduct/EletronicProduct.jsx'
 
 function App() {
 
@@ -53,6 +54,7 @@ function App() {
     <Route path="/*" element={<PageNotFound/>} />
     <Route path="/search/:product" element={<SoloProduct/>} />
     <Route path="/category/:category" element={<GridProduct/>} />
+    <Route path="/searchDetail/:category" element={<EletronicProduct/>} />
 
     {/* USER */}
     <Route path='/sign-up' element={<Signup/>} />
