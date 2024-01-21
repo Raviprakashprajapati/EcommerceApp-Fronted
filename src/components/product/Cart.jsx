@@ -8,9 +8,12 @@ import Loader from "../utils/Loader";
 import { getCurrentUserAPI } from "../api/userApi";
 import CountDown from "../utils/CountDown";
 import { addCartToOrderAPI } from "../api/orderApi";
-
+import { toast } from "react-toastify";
+import CustomToast from "../utils/CustomToast";
 function Cart() {
 
+
+  const notifyOutOfStock = () => toast("Product out of Stock");
   const user = useSelector(selectCurrentUser)
   const [cart,setCart] = useState(null)
   const [CountTimer,setCountTimer] = useState(false)
@@ -78,7 +81,7 @@ function Cart() {
 
       incrementProductFromCartAPI({productId})
       .then((data)=>{
-        setIncrementError(false)
+        setIncrementError(!incrementError)
         setCountTimer(true)
       
           getCurrentUserAPI(user._id)
@@ -87,13 +90,14 @@ function Cart() {
             // console.log("cart ",data)
             window.location.reload()
           }).catch((err)=>{
-            console.log("error",err)
+            
+            console.log("error: ",err)
           })
           
           
         })
         .catch((err)=>{
-        setIncrementError(true)
+        setIncrementError(!incrementError)
         console.log("error: " + err)
       })
 
@@ -106,7 +110,6 @@ function Cart() {
 
       decrementProductFromCartAPI({productIdForDecrement})
       .then((data)=>{
-        setIncrementError(false)
         setCountTimer(true)
         
           getCurrentUserAPI(user._id)
@@ -160,6 +163,19 @@ function Cart() {
 
   return (
     <div>
+
+                    {
+                       incrementError?
+
+                       <div onClick={notifyOutOfStock()} >
+                       
+                      </div>
+                      :null
+                      }
+
+                      <CustomToast/>
+                  
+                        
 
        {/* COUNTDOWN */}
    {CountTimer && <CountDown onClose={closeCountTimer}  />}
@@ -238,12 +254,7 @@ function Cart() {
                     
                   </div>
                 </div>
-                {
-                       incrementError?
-                       <div>
-                       <p className="text-red-400 font-bold text-lg text-center" >Product out of stock</p>
-                      </div>:null
-                      }
+            
 
                     </>
                   )

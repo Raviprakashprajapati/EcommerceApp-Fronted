@@ -135,9 +135,9 @@ function ProductDetailDesign({detail}) {
 
   function handleBuyNow(){
 
+    setCountTimer(true)
     addOrderAPI({productId:detail?._id,quantity:1})
     .then((data)=>{
-      setCountTimer(true)
       if(data){
        
         getCurrentUserAPI(user?._id)
@@ -161,8 +161,8 @@ function ProductDetailDesign({detail}) {
 
     addToCartAPI(detail?._id)
     .then((data)=>{
+      setCountTimer(true)
       
-    setCountTimer(true)
       if(data){
         getCurrentUserAPI(user?._id)
         .then((data)=>{

@@ -14,12 +14,10 @@ export const ordersUserAPI = async() =>{
 }
 
 
-//later
-
 export const orderDetailAPI = async(id) =>{
     try {
 
-        const response = await axios.get(`${orderBaseURL}/get-orders/${id}`)
+        const response = await axios.get(`${orderBaseURL}/get-order/${id}`)
         return response.data
         
     } catch (error) {
@@ -53,7 +51,8 @@ export const addCartToOrderAPI = async() =>{
 
 export const deleteParticularOrderAPI = async(orderId) =>{
     try {
-        const response = await axios.delete(`${orderBaseURL}/delete-order`,orderId)
+       
+        const response = await axios.delete(`${orderBaseURL}/delete-order/${orderId}`)
         return response.data
         
     } catch (error) {

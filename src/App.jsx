@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import Home from './components/public/Home.jsx'
 import { Provider } from 'react-redux'
@@ -29,9 +29,11 @@ import Contactus from "./components/public/Contactus.jsx"
 import PageNotFound from "./components/utils/PageNotFound.jsx"
 import SoloProduct from './components/product/soloproduct/SoloProduct.jsx'
 import SearchBar from './components/utils/SearchBar.jsx'
-
+import GridProduct from './components/product/soloproduct/GridProduct.jsx'
 
 function App() {
+
+
 
   
 
@@ -50,6 +52,7 @@ function App() {
     <Route path="/contact" element={<Contactus/>} />
     <Route path="/*" element={<PageNotFound/>} />
     <Route path="/search/:product" element={<SoloProduct/>} />
+    <Route path="/category/:category" element={<GridProduct/>} />
 
     {/* USER */}
     <Route path='/sign-up' element={<Signup/>} />

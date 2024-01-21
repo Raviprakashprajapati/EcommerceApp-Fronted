@@ -6,12 +6,29 @@ import Loader from '../utils/Loader'
 import image05 from "../../assets/image/image05.jpg"
 import Footer from '../utils/Footer'
 import { allProductsAPI, publicDashboardAPI } from '../api/productApi'
+import { getCurrentUserAPI } from '../api/userApi'
+import { Link } from 'react-router-dom'
 
 function Home() {
 
   const [isLoading,setIsLoading] = useState(true)
   const [homeProduct,setHomeProduct] = useState(null)
   const [dashboard,setDashboard] = useState(null)
+
+
+
+  //check user first
+  useEffect(()=>{
+    getCurrentUserAPI(JSON.parse(localStorage.getItem('user'))?._id)
+    .then((data)=>{
+      console.log("data received ",data)
+    }).catch((err)=>{
+      localStorage.clear()
+      console.log("error received ",err)
+    })
+
+  },[])
+
 
 
   useEffect(()=>{
@@ -67,37 +84,44 @@ function Home() {
           <div className="flex items-center">
             <ul className="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
               <li>
-                <a
-                  href="#"
-                  className="text-gray-900 dark:text-white hover:underline"
-                  aria-current="page"
-                >
+                <Link to={`/category/eletronics`}
+                     className="text-gray-900 dark:text-white hover:underline"
+                     >
+                
                   Electronics
-                </a>
+                </Link>
               </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-900 dark:text-white hover:underline"
-                >
+              <li><Link to={`/category/phone`}
+                     className="text-gray-900 dark:text-white hover:underline"
+                     >
+                
+                  Phone
+                </Link>
+               
+              </li>
+              <li><Link to={`/category/clothing`}
+                     className="text-gray-900 dark:text-white hover:underline"
+                     >
+                
                   Clothing
-                </a>
+                </Link>
+               
               </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-900 dark:text-white hover:underline"
-                >
-                  Team
-                </a>
+              <li><Link to={`/category/shirt`}
+                     className="text-gray-900 dark:text-white hover:underline"
+                     >
+                
+                  Shirt
+                </Link>
+                
               </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-900 dark:text-white hover:underline"
-                >
-                  Features
-                </a>
+              <li><Link to={`/category/tv`}
+                     className="text-gray-900 dark:text-white hover:underline"
+                     >
+                
+                  SmartTV
+                </Link>
+              
               </li>
             </ul>
           </div>

@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { ordersUserAPI } from '../api/orderApi'
+import { deleteParticularOrderAPI, ordersUserAPI } from '../api/orderApi'
 import cartImage02 from "../../assets/image/cartImage02.png";
 import Loader from '../utils/Loader';
+import CountDown from '../utils/CountDown';
+import { getCurrentUserAPI } from '../api/userApi';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../store/redux-features/userSlice';
+import { Link } from 'react-router-dom';
 
 function AllOrders() {
 
+  const user = useSelector(selectCurrentUser)
   const [order,setOrder] = useState(null)
-  
+  const [CountTimer,setCountTimer] = useState(false)
+
 
   useEffect(()=>{
 
@@ -21,22 +28,54 @@ function AllOrders() {
 
   },[])
 
+  const closeCountTimer=()=>{
+    setCountTimer(false)
+  }
+
   
-  function handleCancelOrder(orderId){
-    console.log(orderId)
+  function handleCancelOrder(orderId,status){
+    
+    if(orderId && status.includes('pending')){
+      
+      setCountTimer(true)
+      deleteParticularOrderAPI(orderId)
+      .then((data)=>{
+        if(data){
+          setCountTimer(true)
+
+          if(data){
+            getCurrentUserAPI(user._id)
+            .then((data)=>{
+              localStorage.setItem('user',JSON.stringify(data.data))
+              // console.log("cart ",data)
+              window.location.reload()
+            }).catch((err)=>{
+              console.log("error",err)
+            })
+  
+          }
+        }
+      })
+      .catch((err)=>{
+        console.log("err in order cancel ",err)
+      })
+      
+    }
 
     
-
   }
 
 
   return (
     <div>
-      {
-        order?    <div class="w-full   md:w-2/3 m-auto">
-      
-        {/* order header */}
-        <div class="flex items-center mt-6 justify-center">
+
+        {/* COUNTDOWN */}
+       {CountTimer && <CountDown onClose={closeCountTimer}  />}
+        
+
+
+       {/* order header */}
+       <div class="flex items-center mt-6 justify-center">
           {/* <img src={orderImage01} className="h-[7rem]" alt="" /> */}
           <h2
             class="text-lg ml-3 bg-black text-white p-4 rounded-lg font-medium "
@@ -45,15 +84,26 @@ function AllOrders() {
             My Orders
           </h2>
         </div>
-  
-      
-      {
-        order?null:
+
+        {
+        !order?
         <div>
           <img src={cartImage02} className="mt-5 block m-auto" alt="" />
           <p className="mt-3 text-gray-400 text-center md:text-xl" >Nothing in your Order</p>
-        </div>
+        </div>:null
       }
+
+
+
+      {
+        order?.length>0?   
+        
+        <div class="w-full   md:w-2/3 m-auto">
+      
+       
+  
+      
+     
   
         {/* GPT orders */}
         <div class="flex h-full flex-col bg-white shadow-xl">
@@ -76,7 +126,13 @@ function AllOrders() {
                               return(
                                 <>
                               <li>
-                                  <p className="mb-[-10px] mt-5">Order #{indexi+1}</p>
+                                  <div className="mb-[-10px] mt-5 flex items-center ">
+                                  <p >Order #{indexi+1}</p>
+                                  <Link  class=" text-blue-600 hover:cursor-pointer  text-[0.7rem] font-semibold  px-4  " to={`/order-details/${i?._id}`} >
+                                          Go to Details
+                                  
+                                  </Link>
+                                  </div>
                               <li class="flex py-6   ">
                                   <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                     <img
@@ -101,19 +157,25 @@ function AllOrders() {
                                             {i?.status}
                                           </span>{" "}
                                         </p>
+                                    
                                       </div>
                                     </div>
                                     <div class="flex flex-1 items-end justify-between text-sm">
                                       <p class="text-gray-500">Qty {j?.quantity}</p>
   
                                       <div class="flex">
-                                        <button
+                                      {
+                                        i?.status.includes('pending')?
+                                        <>
+                                          <button
                                           type="button"
                                           class="font-medium text-white-600 hover:text-white-500 bg-red-500 p-2 rounded-lg"
-                                          onClick={()=>handleCancelOrder(i?._id)}
+                                          onClick={()=>handleCancelOrder(i?._id,i?.status)}
                                         >
                                           Cancel
                                         </button>
+                                        </>:null
+                                      }
                                       </div>
                                     </div>
                                   </div>
@@ -135,7 +197,14 @@ function AllOrders() {
   
                                   <li>
                                   <br />
-                                  <p className="mb-[-10px] mt-5">Order #{indexi+1}</p>
+                                
+                                  <div className="mb-[-10px] mt-5 flex items-center ">
+                                  <p >Order #{indexi+1}</p>
+                                  <Link  class=" text-blue-600 hover:cursor-pointer  text-[0.7rem] font-semibold  px-4  " to={`/order-details/${i?._id}`} >
+                                          Go to Details
+                                  
+                                  </Link>
+                                  </div>
                                   <li class="flex flex-col py-6">
                                   {/* Order Summary */}
   
@@ -151,7 +220,7 @@ function AllOrders() {
                                       <img
                                         src={j?.productImage}
                                         alt="Product 1"
-                                        class="h-full p-2 w-auto object-cover object-center"
+                                        class="h-full p-2 w-auto object-cover object-center m-auto"
                                       />
                                     </div>
   
@@ -186,13 +255,19 @@ function AllOrders() {
                                     </div>
                                     
                                   </div>
-                                  <button
+                                {
+                                  i?.status.includes("pending")?
+                                  <>
+                                    <button
                                       type="button"
                                       class="text-sm font-medium text-white-600 hover:text-white-500 bg-red-500 p-2 w-20  rounded-lg"
-                                      onClick={()=>handleCancelOrder(i?._id)}
+                                      onClick={()=>handleCancelOrder(i?._id,i?.status)}
                                     >
                                       Cancel 
                                     </button>
+                                  
+                                  </>:null
+                                }
                                   </div>
   
                                   
@@ -231,8 +306,8 @@ function AllOrders() {
         <br />
         <br />
         <br />
-      </div>:
-      <Loader/>
+      </div>:null
+      
       }
 
   </div>

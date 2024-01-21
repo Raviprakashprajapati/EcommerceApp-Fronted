@@ -1,9 +1,69 @@
-import React from "react";
+import React, { useState } from "react";
 import orderImage01 from "../assets/image/orderImage01.png";
 import cartImage02 from "../assets/image/cartImage02.png";
-function OrderDetailDesign() {
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../components/store/redux-features/userSlice";
+import { Link, useNavigate } from "react-router-dom";
+import CountDown from "../components/utils/CountDown";
+import { deleteParticularOrderAPI } from "../components/api/orderApi";
+import { getCurrentUserAPI } from "../components/api/userApi";
+
+
+
+function OrderDetailDesign({orderDetail}) {
+
+  const user = useSelector(selectCurrentUser)
+  const [CountTimer,setCountTimer] = useState(false)
+  const navigate = useNavigate()
+
+
+  const closeCountTimer=()=>{
+    setCountTimer(false)
+  }
+
+
+  function handleCancelOrder(){
+
+    const orderId = orderDetail?._id
+    const status = orderDetail?.status
+    if(orderId && status.includes('pending')){
+    
+      setCountTimer(true)
+      deleteParticularOrderAPI(orderId)
+      .then((data)=>{
+        if(data){
+          setCountTimer(true)
+
+          if(data){
+            getCurrentUserAPI(user._id)
+            .then((data)=>{
+              localStorage.setItem('user',JSON.stringify(data.data))
+              navigate("/")
+              window.location.reload()
+            }).catch((err)=>{
+              console.log("error",err)
+            })
+  
+          }
+        }
+      })
+      .catch((err)=>{
+        console.log("err in order cancel ",err)
+      })
+      
+    }
+
+    
+  }
+
+
   return (
     <>
+
+
+     {/* COUNTDOWN */}
+   {CountTimer && <CountDown onClose={closeCountTimer}  />}
+        
       <h4 className="bg-slate-800 text-white font-medium text-2xl flex justify-center p-3 m-10 rounded-lg">
         Order Details
       </h4>
@@ -11,19 +71,34 @@ function OrderDetailDesign() {
         {/* order detail */}
       <div className="m-8 flex justify-center items-center flex-col border border-slate-300 p-4 rounded-lg">
         <ul  >
-          <li className="text-xxl bg-slate-200 p-4 rounded-lg text-slate-900 mb-2 font-medium">Order ID: #123456789</li>
-          <li className="text-xxl bg-slate-200 p-4 rounded-lg text-slate-900 mb-2 font-medium">Customer Name: John Doe</li>
-          <li className="text-xxl bg-slate-200 p-4 rounded-lg text-slate-900 mb-2 font-medium">  Contact: +1 123 456 7890</li>
-          <li className="text-xxl bg-slate-200 p-4 rounded-lg text-slate-900 mb-2 font-medium">ProductId: #4363654474</li>
-          <li className="text-xxl bg-slate-200 p-4 rounded-lg text-slate-900 mb-2 font-medium">Address: 123 Main St, Cityville</li>
-          <li className="text-xxl bg-green-200 p-4 rounded-lg text-slate-900 mb-2 font-medium">Status : Success</li>
+          <li className="text-xxl bg-slate-200 p-4 rounded-lg text-slate-900 mb-2 font-medium">Order ID: #{orderDetail?._id}</li>
+          <li className="text-xxl bg-slate-200 p-4 rounded-lg text-slate-900 mb-2 font-medium">Customer Name: {orderDetail?.customerName}</li>
+          <li className="text-xxl bg-slate-200 p-4 rounded-lg text-slate-900 mb-2 font-medium">  Contact: {orderDetail?.contactNumber}</li>
+          <li className="text-xxl bg-slate-200 p-4 rounded-lg text-slate-900 mb-2 font-medium">{orderDetail?.products.length===1?
+                                    <>
+                                  <Link to={`/product-details/${orderDetail?.products[0]?.productId}`} >ProductId: # <span className="text-blue-500"> {orderDetail?.products[0]?.productId}</span></Link>
+                                    </>:
+                                    <>
+                                    {
+                                      orderDetail?.products.map((i,index)=>(
+                                        <p key={index} ><Link to={`/product-details/${i?.productId}`} >ProductId #{index+1} <span className="text-blue-500" >{i?.productId}</span></Link></p>
+                                      ))
+
+                                    }
+                                    
+                                    </>
+                        }</li>
+          <li className="text-xxl bg-slate-200 p-4 rounded-lg text-slate-900 mb-2 font-medium">Address: {orderDetail?.orderAddress}</li>
+          <li className="text-xxl bg-green-200 p-4 rounded-lg text-slate-900 mb-2 font-medium">Status : {orderDetail?.status}</li>
         </ul>
      
       </div>
 
 
-      {/* single porduct */}
-      <div className="w-[90%] md:w-2/3 m-auto">
+      {
+        // {/* single porduct */}
+        orderDetail?.products.length==1?
+        <div className="w-[90%] md:w-2/3 m-auto">
         <div className="flex h-full flex-col bg-white shadow-xl">
           <div className="flex-1 px-4 py-6 sm:px-6">
             <div className="mt-8">
@@ -37,9 +112,11 @@ function OrderDetailDesign() {
                     <div className="flex py-6">
                       <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                         <img
-                          src="https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/n/m/f/g34-5g-pb1v0002in-motorola-original-imagwu4rayqhgfjh.jpeg?q=70"
+                          src={orderDetail?.products[0]?.productImage
+
+                          }
                           alt="Product 1"
-                          className="h-full p-2 w-auto object-cover object-center"
+                          className="h-full m-auto p-2 w-auto object-cover object-center"
                         />
                       </div>
 
@@ -47,13 +124,13 @@ function OrderDetailDesign() {
                         <div>
                           <div className="flex justify-between text-base font-medium text-gray-900">
                             <h3>
-                              <a href="#">Product</a>
+                              <a href="#">{orderDetail?.products[0]?.productName}</a>
                             </h3>
-                            <p className="ml-4">$90.00</p>
+                            <p className="ml-4">₹ {orderDetail?.products[0]?.price}</p>
                           </div>
                         </div>
                         <div className="flex flex-1 items-end justify-between text-sm">
-                          <p className="text-gray-500">Qty 1</p>
+                          <p className="text-gray-500 font-semibold">Qty {orderDetail?.products[0]?.quantity}</p>
                           {/* Cancel button can be placed here if needed */}
                         </div>
                       </div>
@@ -67,87 +144,82 @@ function OrderDetailDesign() {
           </div>
         </div>
       </div>
+      
+      :
 
-      <br /><br /><br />
 
-        {/* for multiple product */}
+      // {/* for multiple product */}
       <div className="w-[90%] md:w-2/3 m-auto">
-        <div className="flex h-full flex-col bg-white shadow-xl">
-          <div className="flex-1 px-4 py-6 sm:px-6">
-            <div className="mt-8">
-              <div className="flow-root">
-                <ul role="list" className="-my-6 divide-y divide-gray-200">
-                  {/* per order MANY PRODUCTS */}
-                  <li className="flex flex-col py-6">
-                    {/* Order Summary */}
+      <div className="flex h-full flex-col bg-white shadow-xl">
+        <div className="flex-1 px-4 py-6 sm:px-6">
+          <div className="mt-8">
+            <div className="flow-root">
+              <ul role="list" className="-my-6 divide-y divide-gray-200">
+                {/* per order MANY PRODUCTS */}
+                <li className="flex flex-col py-6">
+                  {/* Order Summary */}
 
-                    {/* Product 1 */}
-                    <div className="flex py-6">
-                      <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                        <img
-                          src="https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/n/m/f/g34-5g-pb1v0002in-motorola-original-imagwu4rayqhgfjh.jpeg?q=70"
-                          alt="Product 1"
-                          className="h-full p-2 w-auto object-cover object-center"
-                        />
-                      </div>
-
-                      <div className="ml-4 flex flex-1 flex-col">
-                        <div>
-                          <div className="flex justify-between text-base font-medium text-gray-900">
-                            <h3>
-                              <a href="#">Product 1 Name</a>
-                            </h3>
-                            <p className="ml-4">$90.00</p>
-                          </div>
-                        </div>
-                        <div className="flex flex-1 items-end justify-between text-sm">
-                          <p className="text-gray-500">Qty 1</p>
-                          {/* Cancel button can be placed here if needed */}
-                        </div>
-                      </div>
+                  {
+                    orderDetail?.products.map((i,index)=>(
+                      <>
+                      {/* Product 1 */}
+                  <div className="flex py-6">
+                    <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                      <img
+                        src={i?.productImage}
+                        alt="Product Image"
+                        className="h-full p-2 w-auto object-cover object-center"
+                      />
                     </div>
 
-                    {/* Product 2 */}
-                    <div className="flex py-6">
-                      <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                        <img
-                          src="https://example.com/product2-image.jpg"
-                          alt="Product 2"
-                          className="h-full p-2 w-auto object-cover object-center"
-                        />
+                    <div className="ml-4 flex flex-1 flex-col">
+                      <div>
+                        <div className="flex justify-between text-base font-medium text-gray-900">
+                          <h3>
+                            <a href="#">Product {index+1} {i?.productName}</a>
+                          </h3>
+                          <p className="ml-4">₹ {i?.price}</p>
+                        </div>
                       </div>
-
-                      <div className="ml-4 flex flex-1 flex-col">
-                        <div>
-                          <div className="flex justify-between text-base font-medium text-gray-900">
-                            <h3>
-                              <a href="#">Product 2 Name</a>
-                            </h3>
-                            <p className="ml-4">$120.00</p>
-                          </div>
-                        </div>
-                        <div className="flex flex-1 items-end justify-between text-sm">
-                          <p className="text-gray-500">Qty 2</p>
-                          {/* Cancel button can be placed here if needed */}
-                        </div>
+                      <div className="flex flex-1 items-end justify-between text-sm">
+                        <p className="text-gray-500 font-semibold">Qty {i?.quantity}</p>
+                        {/* Cancel button can be placed here if needed */}
                       </div>
                     </div>
-                  </li>
-                </ul>
-              </div>
+                  </div>
+                      
+                      </>
+                    ))
+                  }
+
+              
+
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
+    </div>
+
+      }
+
+      <br /><br /><br />
+
+     
 
    
 
       {/* Order Details */}
       <div className="m-8 flex justify-center items-center flex-col ">
         <ul>
-          <li className="text-xxl bg-black p-4 rounded-lg text-white mb-2 font-medium">Total Price : 43436</li>
+          <li className="text-xxl bg-black p-4 rounded-lg text-white mb-2 font-medium">Total Price : {orderDetail?.totalAmount}</li>
+
+          {
+            orderDetail?.status.includes("pending")?<li className="text-xxl bg-red-700 text-center hover:bg-red-500 p-4 rounded-lg text-white mb-2 font-medium" onClick={handleCancelOrder} >Cancel</li>:null
+          }
           
-          <li className="text-xxl bg-red-800 p-4 rounded-lg text-white mb-2 font-medium">  Cancel Order</li>
+        
    
 
         </ul>
