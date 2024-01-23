@@ -1,6 +1,8 @@
 import React from 'react'
 
-function Loader() {
+function Loader({timer}) {
+    
+
   return (
     <div>
         

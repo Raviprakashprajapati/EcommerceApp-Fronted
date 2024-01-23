@@ -1,6 +1,6 @@
 import React from 'react'
 import adminImage02 from "../assets/image/adminImage02.png"
-function AdminDashboardDesign() {
+function AdminDashboardDesign({dashbaord}) {
   return (
     <div  >
 
@@ -26,7 +26,7 @@ function AdminDashboardDesign() {
           <img className="h-12 w-12 rounded-full" src="https://img.freepik.com/free-vector/future-work-concept-illustration_614304-14.jpg?w=740&t=st=1704980724~exp=1704981324~hmac=27a7304e1c2147aea79771413181eba085054c8ffd66d36f4254fe6daeb4a21b" />
         </div>
         <div>
-          <div className="text-xl font-medium text-black">99</div>
+          <div className="text-xl font-medium text-black">{dashbaord.users}</div>
           <p className="text-slate-500 ">USERS</p>
         </div>
       </div>
@@ -36,7 +36,7 @@ function AdminDashboardDesign() {
           <img className="h-12 w-12 rounded-full" src="https://img.freepik.com/free-vector/shopping-discounts-allowances-cartoon-web-icon-selling-price-reduction-retail-sales-creative-marketing-special-offer-customer-attraction-idea-vector-isolated-concept-metaphor-illustration_335657-2750.jpg?w=740&t=st=1704981109~exp=1704981709~hmac=bee6a06e9fe5e8aae2a97af79cef49766eb9c9902b2e3944fc395e42f8420908" />
         </div>
         <div>
-          <div className="text-xl font-medium text-black">99</div>
+          <div className="text-xl font-medium text-black">{dashbaord.products}</div>
           <p className="text-slate-500 text-sm">PRODUCTS</p>
         </div>
       </div>
@@ -46,7 +46,7 @@ function AdminDashboardDesign() {
           <img className="h-12 w-12 rounded-full" src="https://img.freepik.com/free-vector/shopping-cart-icon-isolated-illustration_18591-82226.jpg?w=740&t=st=1704981274~exp=1704981874~hmac=d552bc0417a7bd78ce34de7358aaf6b00a5755d7d1aa04e552e482e981dbc376" />
         </div>
         <div>
-          <div className="text-xl font-medium text-black">99</div>
+          <div className="text-xl font-medium text-black">{dashbaord.orders}</div>
           <p className="text-slate-500">ORDERS</p>
         </div>
       </div>
@@ -56,7 +56,7 @@ function AdminDashboardDesign() {
           <img className="h-12 w-12 rounded-full " src="https://img.freepik.com/free-vector/five-star-grading-evaluation-rating-estimating-excellent-review-customer-satisfaction-with-service-highest-score-client-feedback_335657-2684.jpg?w=740&t=st=1704981452~exp=1704982052~hmac=4cf801f2e0b320c84b53be12a4a8b29baed79ba45b93ab763e42b23a43e10df9" />
         </div>
         <div>
-          <div className="text-xl font-medium text-black">99</div>
+          <div className="text-xl font-medium text-black">{dashbaord.reviews}</div>
           <p className="text-slate-500">REVIEWS</p>
         </div>
       </div>
@@ -69,7 +69,7 @@ function AdminDashboardDesign() {
         <img src="https://img.freepik.com/free-photo/graph-going-up-red-arrow-bar-graph-with-arrow-business-concept_35913-3361.jpg?w=826&t=st=1704982338~exp=1704982938~hmac=0a63334242f473d941c663dfaede1b5bbc6a9ca53e15ea2e5945d1166ba40fd5" className='h-[8rem]' />
        <button disabled type="button" class="py-2.5 px-5 me-2 text-sm font-medium text-gray-900 bg-slate-300 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center">
        
-        Total Visitors...{"5"}
+        Total Visitors...{dashbaord.traffic}
         </button>
 
         </div><br /><br />

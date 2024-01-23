@@ -9,6 +9,7 @@ import {
 import Loader from "../../utils/Loader";
 
 function GridProduct() {
+
   const [product, SetProduct] = useState(null);
   const { category } = useParams();
 
@@ -84,6 +85,7 @@ function GridProduct() {
 
         }
     }
+    
   }, []);
 
   return (

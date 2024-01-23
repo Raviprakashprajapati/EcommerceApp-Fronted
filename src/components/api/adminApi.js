@@ -112,6 +112,17 @@ export const adminGetAllOrders = async() =>{
     }
 }
 
+export const adminGetOrderDetail = async(orderId)=>{
+    try {
+
+        const response = await axios.get(`${adminOrderBaseURL}/orderDetail/${orderId}`)
+        return response.data
+        
+    } catch (error) {
+        throw error
+    }
+}
+
 export const adminUpdateOrderAPI = async(id,status) =>{
     try {
 
@@ -122,6 +133,17 @@ export const adminUpdateOrderAPI = async(id,status) =>{
         throw error
     }
 }
+
+export const adminDashboardAPI = async() =>{
+    try {
+
+        const response = await axios.get(`${adminProductBaseURL}/dashboard`)
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
+
 
 
 

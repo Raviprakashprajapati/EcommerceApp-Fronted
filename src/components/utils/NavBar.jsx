@@ -301,7 +301,7 @@ function NavBar() {
       {/* FIRST NAVBAR */}
       <Navbar fluid rounded>
         <Navbar.Brand
-          onClick={() => navigate("/")}
+          onClick={() => navigate(admin?"/admin/profile":"/")}
           className="hover:cursor-pointer"
         >
           <img

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import Home from './components/public/Home.jsx'
-import { Provider } from 'react-redux'
+import { Provider, useSelector } from 'react-redux'
 import { store } from './components/store/store.js'
 import UserProfile from './components/user/UserProfile.jsx'
 import UpdateAvatar from './components/user/UpdateAvatar.jsx'
@@ -31,14 +31,13 @@ import SoloProduct from './components/product/soloproduct/SoloProduct.jsx'
 import SearchBar from './components/utils/SearchBar.jsx'
 import GridProduct from './components/product/soloproduct/GridProduct.jsx'
 import EletronicProduct from './components/product/soloproduct/EletronicProduct.jsx'
+import AdminProductsDesign from './design/AdminProductsDesign.jsx'
+import AdminProductDetail from './components/admin/AdminProductDetail.jsx'
+import { selectCurrentAdmin } from './components/store/redux-features/adminSlice.js'
 
 function App() {
 
-
-
-  
-
-  
+ 
   return (
     <Provider store={store} >
     <BrowserRouter>
@@ -55,6 +54,7 @@ function App() {
     <Route path="/search/:product" element={<SoloProduct/>} />
     <Route path="/category/:category" element={<GridProduct/>} />
     <Route path="/searchDetail/:category" element={<EletronicProduct/>} />
+    <Route path="/searchBar/:input" element={<SoloProduct/>} />
 
     {/* USER */}
     <Route path='/sign-up' element={<Signup/>} />
@@ -80,6 +80,7 @@ function App() {
     <Route path="/admin/add-product" element={<AdminAddProduct/>} />
     <Route path="/admin/orders" element={<AdminOrders/>} />
     <Route path="/admin/products" element={<AdminProducts/>} />
+    <Route path="/admin/productDetail/:productId" element={<AdminProductDetail/>} />
     <Route path="/admin/update-order/:orderId" element={<AdminUpdateOrder/>} />
     <Route path="/admin/update-product/:productId" element={<AdminUpdateProduct/>} />
     <Route path="/admin/users" element={<AdminUsers/>} />
@@ -92,9 +93,13 @@ function App() {
 }
 
 function SearchBarBasedOnRoute(){
+
+  const admin = useSelector(selectCurrentAdmin)
   const location = useLocation()
   const pathsWithoutSearchBar = ['/login', '/sign-up','/order','/order-details/:orderId','/orderId','/cart', '/myreviews',"/profile",'/update-avatar','/update-profile','/update-password'];
   const shouldRenderSearchBar = !pathsWithoutSearchBar.includes(location.pathname);
+
+  if(admin) return null
 
   return shouldRenderSearchBar ? <SearchBar /> : null;
 

@@ -1,6 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import adminImage02 from "../assets/image/adminImage02.png"
-function AdminProductsDesign() {
+import { Link } from 'react-router-dom'
+
+
+function AdminProductsDesign({product}) {
+
+    const [inputProduct,setInputProduct] = useState("")
+   
+   
+
   return (
     <div className='bg-slate-100' >
 
@@ -27,7 +35,7 @@ function AdminProductsDesign() {
         <span class="absolute inset-y-0 left-0 flex items-center pl-2">
             🔎
         </span>
-        <input class="placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" placeholder="Search for any products..." type="text" name="search"/>
+        <input value={inputProduct} onChange={(e)=>setInputProduct(e.target.value.toLowerCase())} class="placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" placeholder="Search for any products..." type="text" name="search"/>
         </label>
         </div>
         </div>
@@ -99,41 +107,68 @@ function AdminProductsDesign() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Apple MacBook Pro 17"
-                        </th>
-                        <td class="px-6 py-4">
-                            78965
-                        </td>
-                        <td class="px-6 py-4">
-                            eletronics
-                        </td>
-                        <td class="px-6 py-4">
-                            phone
-                        </td>
-                        <td class="px-6 py-4">
-                            Apple
-                        </td>
-                        <td class="px-6 py-4">
-                            2
-                        </td>
-                        <td class="px-6 py-4">
-                            true
-                        </td>
-                        <td class="px-6 py-4">
-                            10
-                        </td>
-                        <td class="px-6 py-4">
-                            4
-                        </td>
 
-
-
-                        <td class="px-6 py-4">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Link</a>
-                        </td>
-                    </tr>
+                  {
+                    product?.length>0?
+                    <>
+                    {
+                        product
+                        .filter((product)=>(
+                            inputProduct.toLowerCase()===""? product :
+                            product?.name.toLowerCase().includes(inputProduct) ||
+                            product?.name.toLowerCase().includes(inputProduct) ||
+                            product?.price.toLowerCase().includes(inputProduct) ||
+                            product?.brand.toLowerCase().includes(inputProduct) ||
+                            product?.category.toLowerCase().includes(inputProduct) ||
+                            product?.subCategory.toLowerCase().includes(inputProduct) ||
+                            product?.stock.toLowerCase().includes(inputProduct) 
+                            // product?.rating.toLowerCase().includes(inputProduct) 
+                        ))
+                        
+                        .map((i,index)=>(
+                            <tr key={index} class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {index+1}: { i?.name}
+                            </th>
+                            <td class="px-6 py-4">
+                                {i?.price}
+                            </td>
+                            <td class="px-6 py-4">
+                                {i?.category}
+                            </td>
+                            <td class="px-6 py-4">
+                                {i?.subCategory}
+                            </td>
+                            <td class="px-6 py-4">
+                                {i?.brand}
+                            </td>
+                            <td class="px-6 py-4">
+                                {i?.warranty}
+                            </td>
+                            <td class="px-6 py-4">
+                                {i?.trending?"True":"False"}
+                            </td>
+                            <td class="px-6 py-4">
+                                {i?.stock}
+                            </td>
+                            <td class="px-6 py-4">
+                                {i?.rating}
+                            </td>
+    
+    
+    
+                            <td class="px-6 py-4">
+                                <Link to={`/admin/productDetail/${i?._id}`}  class="font-medium text-blue-600 dark:text-blue-500 hover:underline" >
+                                Link
+                                </Link>
+                                
+                            </td>
+                        </tr>
+                        ))
+                    }
+                    
+                    </>:null
+                  }
                  
                 </tbody>
             </table>

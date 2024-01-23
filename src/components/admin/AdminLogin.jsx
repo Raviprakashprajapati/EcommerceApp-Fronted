@@ -36,7 +36,7 @@ function AdminLogin() {
             localStorage.clear()
             localStorage.setItem("admin", JSON.stringify(data.data.admin))
             localStorage.setItem("accessToken", data.data.accessToken)
-            navigate("/")
+            navigate("/admin/profile")
     
             window.location.reload()
           })
