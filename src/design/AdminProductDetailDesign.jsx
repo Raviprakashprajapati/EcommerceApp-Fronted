@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function AdminProductDetailDesign({product}) {
   return (
@@ -8,6 +9,10 @@ function AdminProductDetailDesign({product}) {
         <h2 className="text-3xl font-semibold">{product?.name}</h2>
         <p className="text-gray-600">{product?.category}</p>
       </div>
+      <div>
+        <Link to={`/admin/update-product/${product?._id}`} className='bg-green-400 p-4 rounded-lg font-bold text-slate-700 hover:bg-green-500 ' >Update</Link>
+      </div>
+      <br />
 
       <div className="flex flex-wrap gap-5 justify-center items-center">
         <div>

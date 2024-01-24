@@ -1,6 +1,51 @@
-import React from 'react'
+import React, { useState } from 'react'
 import adminImage02 from "../../assets/image/adminImage02.png"
+import { useParams } from 'react-router-dom'
+import { adminUpdateProductAPI } from '../api/adminApi'
+
 function AdminUpdateProduct() {
+
+  const {productId} = useParams()
+  const [productField,setProductField] = useState({
+      price:"",
+      discount:"",
+      warranty:null,
+      age:"",
+      trending:null,
+      hype:null,
+      stock:"",
+      offer:""
+
+  })
+
+  function handleChange(e){
+    const {name,value} = e.target
+    setProductField((prev)=>({...prev,[name]:value}))
+  }
+
+  function handleSubmit(e){
+    e.preventDefault()
+    const body = {}
+    console.log(productField)
+    for (const i in productField) {
+      if(productField[i]){
+        body[i] = productField[i]
+      }
+    }
+    
+    adminUpdateProductAPI(productId,body)
+    .then((data)=>{
+      if(data){
+        window.location.reload()
+      }
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+
+  }
+  
+
   return (
     <div>
         <div>
@@ -10,7 +55,7 @@ function AdminUpdateProduct() {
         <div className="px-4 sm:px-0 ">
           <div className="bg-black  rounded-lg flex justify-center items-center p-2 ">
             <img src={adminImage02} alt="" className='h-[4rem]' />
-            <h3 className="text-lg text-amber-300  font-semibold  leading-7 p-3 rounded-lg text-center">
+            <h3 className="text-lg text-amber-300  font-semibold  leading-7 p-2 rounded-lg text-center">
               Admin - Update Product
             </h3>
           </div>
@@ -23,6 +68,7 @@ function AdminUpdateProduct() {
 
         {/* <!-- Small statement on top --> */}
 
+      <p className='text-black m-3 ' >ProductId  #{productId}</p>
         {/* <!-- Form with labels and input boxes --> */}
         <form className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
          
@@ -40,9 +86,11 @@ function AdminUpdateProduct() {
               className="w-full px-3 py-2 border rounded-md"
               type="text"
               id="Price"
-              name="Price"
+              name="price"
               placeholder="Enter product price"
-              required
+              value={productField.price}
+              onChange={handleChange}
+              
             />
           </div>
 
@@ -61,7 +109,10 @@ function AdminUpdateProduct() {
               id="discount"
               name="discount"
               placeholder="Min.50% Off OR Up to 70% Off "
-              required
+              
+              value={productField.discount}
+              onChange={handleChange}
+              
             />
           </div>
 
@@ -82,7 +133,9 @@ function AdminUpdateProduct() {
               id="warranty"
               name="warranty"
               placeholder="1 or 2"
-              required
+              
+              value={productField.warranty}
+              onChange={handleChange}
             />
           </div>
 
@@ -100,7 +153,9 @@ function AdminUpdateProduct() {
               id="age"
               name="age"
               placeholder="new or old"
-              required
+              
+              value={productField.age}
+              onChange={handleChange}
             />
           </div>
 
@@ -118,7 +173,9 @@ function AdminUpdateProduct() {
               id="trending"
               name="trending"
               placeholder="true or false"
-              required
+              
+              value={productField.trending}
+              onChange={handleChange}
             />
           </div>
 
@@ -138,7 +195,10 @@ function AdminUpdateProduct() {
               id="hype"
               name="hype"
               placeholder="true or false"
-              required
+              
+              value={productField.hype}
+              onChange={handleChange}
+              
             />
           </div>
 
@@ -156,7 +216,9 @@ function AdminUpdateProduct() {
               id="stock"
               name="stock"
               placeholder="1 or 10"
-              required
+              
+              value={productField.stock}
+              onChange={handleChange}
             />
           </div>
 
@@ -173,9 +235,11 @@ function AdminUpdateProduct() {
             <textarea
               className="w-full px-3 py-2 border rounded-md min-h-10 max-h-40"
               id="Offer"
-              name="Offer"
+              name="offer"
               placeholder="1. offer\n2. offwe2"
-              required
+              
+              value={productField.offer}
+              onChange={handleChange}
             
               
             ></textarea>
@@ -195,7 +259,7 @@ function AdminUpdateProduct() {
               type="checkbox"
               value=""
               class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-              required
+              
             />
           </div>
           <label
@@ -214,6 +278,7 @@ function AdminUpdateProduct() {
 
 
         <button
+          onClick={handleSubmit}
           type="submit"
           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >

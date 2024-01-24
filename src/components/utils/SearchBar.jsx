@@ -1,22 +1,34 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { searchAllProduct } from "../api/searchApi";
+import { allProductsAPI } from "../api/productApi";
 
 function SearchBar() {
+  const [inputSearch, setInputSearch] = useState("");
+  const [product, setProduct] = useState(null);
+  const navigate = useNavigate();
 
-  const [inputSearch,setInputSearch] = useState("")
-  const navigate = useNavigate()
-
-  function handleSubmit(e){
-    e.preventDefault()
-    if(inputSearch===""){
-      
-    }else{
-      navigate(`/searchbar/${inputSearch}`)
-      window.location.reload()
-      
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (inputSearch === "") {
+    } else {
+      navigate(`/searchbar/${inputSearch}`);
+      setInputSearch("")
     }
   }
 
+  useEffect(() => {
+    allProductsAPI()
+      .then((data) => {
+        console.log("data by write ", data);
+        if (data) {
+          setProduct(data?.data);
+        }
+      })
+      .catch((err) => {
+        console.log("err in search bar ", err);
+      });
+  }, []);
 
   return (
     <div className="mb-2">
@@ -57,18 +69,64 @@ function SearchBar() {
                 placeholder="Search products, phone..."
                 required
                 value={inputSearch}
-                onChange={(e)=>setInputSearch(e.target.value)}
+                onChange={(e) => setInputSearch(e.target.value.toLowerCase())}
               />
 
-              <button
+              {/* <button
                 type="submit"
                 class="text-white absolute top-0 right-0 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-2 py-[0.6rem] dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 onClick={handleSubmit}
               >
                 Search
-              </button>
+              </button> */}
             </div>
           </div>
+
+          {/* Display search results */}
+          {inputSearch === "" ? null : (
+            <div className="mt-1 w-[80%] md:w-[70%] max-h-40 fixed z-50 bg-slate-600 text-white overflow-y-auto">
+              {product ? (
+                <>
+                  {product
+                    ?.filter( (i) =>
+                        i?.name.toLowerCase().includes(inputSearch) ||
+                        i?.brand.toLowerCase().includes(inputSearch) ||
+                        i?.stock.toLowerCase().includes(inputSearch) ||
+                        i?.age.toLowerCase().includes(inputSearch) ||
+                        i?.keywords.toLowerCase().includes(inputSearch) ||
+                        i?.features.toLowerCase().includes(inputSearch) ||
+                        i?.price.toLowerCase().includes(inputSearch) ||
+                        i?.subCategory.toLowerCase().includes(inputSearch) ||
+                        String(i?.raiting).includes(inputSearch) 
+                    )
+
+                    ?.map((result, index) => (
+                      <Link
+                        onClick={() => setInputSearch("")}
+                        key={index}
+                        to={`/product-details/${result?._id}`}
+                        className="p-2 border-b block"
+                      >
+                        {result?.name}
+                      </Link>
+                    ))}
+                </>
+              ) : (
+                <div
+                  role="status"
+                  class="w-full p-4 space-y-4 border border-gray-200 divide-y divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700"
+                >
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                      <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                    </div>
+                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </form>
       </div>
     </div>

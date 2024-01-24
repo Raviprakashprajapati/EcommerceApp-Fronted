@@ -53,10 +53,10 @@ function ElectronicProductDesign({product}) {
 
             {/* <!-- Features Block below the card --> */}
             <div class="  flex gap-2 flex-wrap">
-              <button className="border p-1 text-sm text-slate-500">
+              <button className="border p-1 text-[0.7rem] text-slate-500">
                 {i?.features.split("\\n")?.[0] || null}
               </button>
-              <button className="border p-1 text-sm text-slate-500">
+              <button className="border p-1 text-[0.7rem] text-slate-500">
               {i?.features.split("\\n")?.[1] || null}
               </button>
               <button className="border p-1 text-[0.7rem] text-slate-500">

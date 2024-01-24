@@ -76,10 +76,10 @@ export const adminAddProductAPI = async(data) =>{
     }
 }
 
-export const adminUpdateProductAPI = async(id) =>{
+export const adminUpdateProductAPI = async(id,body) =>{
     try {
 
-        const response = await axios.patch(`${adminProductBaseURL}/update-product/${id}`)
+        const response = await axios.patch(`${adminProductBaseURL}/update-product/${id}`,body)
         return response.data
         
     } catch (error) {
@@ -90,7 +90,7 @@ export const adminUpdateProductAPI = async(id) =>{
 export const adminDeleteProductAPI = async(id) =>{
     try {
 
-        const response = await axios.delete(`${adminProductBaseURL}/${id}`)
+        const response = await axios.delete(`${adminProductBaseURL}/delete-product/${id}`)
         return response.data
         
     } catch (error) {

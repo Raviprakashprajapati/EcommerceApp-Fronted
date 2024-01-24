@@ -1,11 +1,26 @@
 import React, { useState } from 'react'
 import adminImage02 from "../assets/image/adminImage02.png"
 import { Link } from 'react-router-dom'
+import { adminDeleteProductAPI } from '../components/api/adminApi'
 
 
 function AdminProductsDesign({product}) {
 
     const [inputProduct,setInputProduct] = useState("")
+
+    function handleDelete(id){
+        if(id){
+            adminDeleteProductAPI(id)
+            .then((data)=>{
+                if(data){
+                    console.log(data)
+                    window.location.reload()
+                }
+            }).catch((err)=>{
+                console.log(err)
+            })
+        }
+    }
    
    
 
@@ -104,6 +119,10 @@ function AdminProductsDesign({product}) {
                         <th scope="col" class="px-6 py-3">
                             Details
                         </th>
+
+                        <th scope="col" class="px-6 py-3">
+                            Delete
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -121,7 +140,8 @@ function AdminProductsDesign({product}) {
                             product?.brand.toLowerCase().includes(inputProduct) ||
                             product?.category.toLowerCase().includes(inputProduct) ||
                             product?.subCategory.toLowerCase().includes(inputProduct) ||
-                            product?.stock.toLowerCase().includes(inputProduct) 
+                            product?.stock.toLowerCase().includes(inputProduct) ||
+                            String(product?.price).includes(inputProduct)
                             // product?.rating.toLowerCase().includes(inputProduct) 
                         ))
                         
@@ -163,6 +183,10 @@ function AdminProductsDesign({product}) {
                                 </Link>
                                 
                             </td>
+                            <td class="px-6 py-4">
+                               <p onClick={()=>handleDelete(i?._id)} > ❌</p>
+                            </td>
+    
                         </tr>
                         ))
                     }

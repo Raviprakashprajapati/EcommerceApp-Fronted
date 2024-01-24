@@ -86,7 +86,8 @@ function AdminOrdersDesign({order}) {
                     order?.status.toLowerCase().includes(inputOrder) || 
                     order?.orderAddress.toLowerCase().includes(inputOrder) || 
                     order?.userId.toLowerCase().includes(inputOrder)  ||
-                    order?.totalAmount===Number.parseInt(inputOrder)  
+                    String(order?.totalAmount).includes(inputOrder) 
+                    
 
                     ))
                     
@@ -122,7 +123,7 @@ function AdminOrdersDesign({order}) {
                         {i?.totalAmount}
                     </td>
                    
-                    <td class="px-6 py-4 bg-green-400 text-black hover:cursor-pointer hover:bg-green-200 font-bold">
+                    <td class={i?.status.includes("success")?"px-6 py-4 bg-black text-white hover:cursor-pointer font-bold":"px-6 py-4 bg-green-400 text-black hover:cursor-pointer hover:bg-green-200 font-bold"}>
                         {i?.status.includes("success")?<p>Completed</p>:<Link to={`/admin/update-order/${i?._id}`} >Update</Link>}
                     </td>
                     

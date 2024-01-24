@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import AdminProductDetailDesign from '../../design/AdminProductDetailDesign'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { productDetailAPI } from '../api/productApi'
 import Loader from '../utils/Loader'
 
@@ -8,6 +8,7 @@ function AdminProductDetail() {
 
     const [product,setProduct] = useState()
     const {productId} = useParams()
+    const navigate = useNavigate()
    
     useEffect(()=>{
 

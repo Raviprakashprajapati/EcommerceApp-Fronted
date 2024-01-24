@@ -55,3 +55,12 @@ export const searchProductByInput = async(input) =>{
         throw error
     }
 }
+
+export const searchAllProduct = async() =>{
+    try {
+        const response = await axios.get(`${searchBaseURL}/all-products`)
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
