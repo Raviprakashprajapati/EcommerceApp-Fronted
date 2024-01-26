@@ -34,6 +34,7 @@ import EletronicProduct from './components/product/soloproduct/EletronicProduct.
 import AdminProductsDesign from './design/AdminProductsDesign.jsx'
 import AdminProductDetail from './components/admin/AdminProductDetail.jsx'
 import { selectCurrentAdmin } from './components/store/redux-features/adminSlice.js'
+import AdminFeedback from './components/admin/AdminFeedback.jsx'
 
 function App() {
 
@@ -84,6 +85,7 @@ function App() {
     <Route path="/admin/update-order/:orderId" element={<AdminUpdateOrder/>} />
     <Route path="/admin/update-product/:productId" element={<AdminUpdateProduct/>} />
     <Route path="/admin/users" element={<AdminUsers/>} />
+    <Route path="/admin/feedback" element={<AdminFeedback/>} />
 
     </Routes>
     </BrowserRouter>

@@ -387,6 +387,7 @@ function NavBar() {
                 <li className="mb-3 hover:text-slate-400 "><Link to="/admin/products" >Products</Link></li>
                 <li className="mb-3 hover:text-slate-400 "><Link to="/admin/users" >Users</Link></li>
                 <li className="mb-3 hover:text-slate-400 "><Link to="/admin/orders" >Orders</Link></li>
+                <li className="mb-3 hover:text-slate-400 "><Link to="/admin/feedback" >Feedbacks</Link></li>
                 <li className="mb-3 hover:text-slate-400 "><Link to="/admin/add-product" >Add-Product</Link></li><br /><br />
                 <li className="mb-2 bg-red-600 p-2 rounded-lg hover:bg-red-400 text-center "  onClick={handleAdminLogout} >Logout</li>
                 {/* Add more features as needed */}

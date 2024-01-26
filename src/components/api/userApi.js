@@ -85,3 +85,26 @@ export const deactivateUserAPI = async() =>{
 }
 
 
+
+//feedback
+export const feedbackUserAPI = async(body) =>{
+    try {
+        const response = await axios.post(`${userBaseURL}/feedback`,body)
+        return response.data
+        
+    } catch (error) {
+        throw error
+    }
+}
+
+
+export const GetFeedbackUserAPI = async() =>{
+    try {
+        const response = await axios.get(`${userBaseURL}/get-feedback`)
+        return response.data
+        
+    } catch (error) {
+        throw error
+    }
+}
+
