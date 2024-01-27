@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const productBaseURL = '/api/v1/products'
+const productBaseURL = 'https://fullmernecommerceapp.onrender.com/api/v1/products'
 
 export const cartsUserAPI = async()=>{
     try {

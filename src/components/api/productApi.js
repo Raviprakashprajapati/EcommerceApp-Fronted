@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const productBaseURl = '/api/v1/products'
+const productBaseURl = 'https://fullmernecommerceapp.onrender.com/api/v1/products'
 
 export const getUserReviewsAPI = async() =>{
 

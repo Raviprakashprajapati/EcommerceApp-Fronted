@@ -1,7 +1,7 @@
 import axios from "axios"
 
 
-const searchBaseURL = '/api/v1/products/search'
+const searchBaseURL = 'https://fullmernecommerceapp.onrender.com/api/v1/products/search'
 
 export const searchProductByReqAPI = async(search)=>{
     try {

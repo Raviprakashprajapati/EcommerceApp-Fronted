@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const adminUserBaseURL = '/api/v1/users/admin'
-const adminProductBaseURL = '/api/v1/products/admin'
-const adminOrderBaseURL = '/api/v1/orders/admin'
+const adminUserBaseURL = 'https://fullmernecommerceapp.onrender.com/api/v1/users/admin'
+const adminProductBaseURL = 'https://fullmernecommerceapp.onrender.com/api/v1/products/admin'
+const adminOrderBaseURL = 'https://fullmernecommerceapp.onrender.com/api/v1/orders/admin'
 
 
 //user
