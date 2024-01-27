@@ -125,7 +125,7 @@ function Aboutus() {
               <div className="lg:max-w-md">
                 <span className="text-xl font-semibold text-blue-600 uppercase dark:text-blue-500"></span>
                 <h2 className="mt-4 mb-6 text-2xl font-bold dark:text-gray-300">
-                  We are the large business expert in Europe and Asia
+                  We are the Providing Ecommerce product in category of Eletronics, Clothing and many soon
                 </h2>
                 <p className="mb-10 text-gray-600 dark:text-gray-400 ">
                   Ravi Prakash, our proficient project leader, ensures a

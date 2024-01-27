@@ -15,7 +15,7 @@ function ProductCardHome({productHeaderName="Top Deals",data=[]}) {
       <div className="slider-container overflow-x-auto whitespace-nowrap">
 
        {
-        data.map((i)=>(
+        data?.map((i)=>(
             <Link key={i?._id} to={`/product-details/${i?._id}`} >
                  <div  className="w-[200px] bg-sl bg-white shadow-lg rounded-lg overflow-hidden border border-slate-300 inline-block mx-2 my-4">
           <img

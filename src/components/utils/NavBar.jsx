@@ -79,7 +79,7 @@ function NavBar() {
       {sideBarToggle ? (
         <Sidebar
           aria-label="Sidebar with logo branding example"
-          className=" fixed h-screen z-50  "
+          className=" fixed h-screen z-50  border-2 border-black "
         >
           <Sidebar.Logo
             className="hover:cursor-pointer"
@@ -92,7 +92,7 @@ function NavBar() {
             />
           </Sidebar.Logo>
 
-          <Sidebar.Items>
+          <Sidebar.Items  >
             <Sidebar.ItemGroup>
               <div
                 className="flex items-center justify-start "
