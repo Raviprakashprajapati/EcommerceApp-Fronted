@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { GetFeedbackUserAPI } from '../api/userApi'
-import adminImage02 from "../../assets/image/adminImage02.png"
+import adminImageMain from "../../assets/image/adminImageMain.png"
 import { getDate } from '../utils/randomFunciton'
 import Loader from '../utils/Loader'
 function AdminFeedback() {
@@ -27,7 +27,7 @@ function AdminFeedback() {
         <div className='w-[93%] md:w-[80%] m-auto ' >
         <div className="px-4 sm:px-0 ">
           <div className="bg-black p-2  rounded-lg flex justify-center items-center ">
-            <img src={adminImage02} className='h-[4rem]'  alt="" />
+            <img src={adminImageMain} className='h-[4rem]'  alt="" />
             <h3 className="text-lg text-amber-300  font-semibold  leading-7 p-3 rounded-lg text-center">
               Admin - Feedback
             </h3>
