@@ -22,7 +22,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CustomToast from "./CustomToast";
 import { selectCurrentAdmin } from "../store/redux-features/adminSlice";
-import adminImage02 from "../../assets/image/adminImage02.png";
+import adminImageMain from "../../assets/image/adminImageMain.png";
 import { adminLogoutAPI } from "../api/adminApi";
 import logoR from "../../assets/image/logoR.png"
 
@@ -325,7 +325,7 @@ function NavBar() {
               ) : (
                 <>
                   {admin ? (
-                    <Avatar alt="User settings" img={adminImage02} />
+                    <Avatar alt="User settings" img={adminImageMain}  />
                   ) : (
                     <Avatar
                       alt="User settings"
