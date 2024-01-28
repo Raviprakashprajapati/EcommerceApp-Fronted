@@ -14,7 +14,7 @@ export const getCurrentUserAPI = async(id) =>{
 
 export const loginUserAPI = async(loginData) =>{
     try {
-        const response = await axios.post(`${userBaseURL}/login`,loginData,{withCredentials:true});
+        const response = await axios.post(`${userBaseURL}/login`,loginData);
         return response.data
     } catch (error) {
         throw error;        
