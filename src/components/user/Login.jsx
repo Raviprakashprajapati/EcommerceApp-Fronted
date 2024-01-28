@@ -45,7 +45,7 @@ function Login() {
         localStorage.setItem("accessToken", data.data.accessToken)
         localStorage.setItem("refreshToken", data.data.refreshToken)
         navigate("/")
-
+        console.log("user ",data)
         window.location.reload()
        
 

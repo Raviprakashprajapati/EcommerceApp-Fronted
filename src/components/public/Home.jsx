@@ -19,16 +19,16 @@ function Home() {
 
 
   //check user first
-  useEffect(()=>{
-    getCurrentUserAPI(JSON.parse(localStorage.getItem('user'))?._id)
-    .then((data)=>{
-      console.log("data received ",data)
-    }).catch((err)=>{
-      localStorage.clear()
-      console.log("error received ",err)
-    })
+  // useEffect(()=>{
+  //   getCurrentUserAPI(JSON.parse(localStorage.getItem('user'))?._id)
+  //   .then((data)=>{
+  //     console.log("data received ",data)
+  //   }).catch((err)=>{
+  //     localStorage.clear()
+  //     console.log("error received ",err)
+  //   })
 
-  },[])
+  // },[])
 
 
 
