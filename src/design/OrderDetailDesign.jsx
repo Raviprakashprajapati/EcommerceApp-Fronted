@@ -18,10 +18,10 @@ function OrderDetailDesign({ orderDetail }) {
   };
 
   function handleCancelOrder() {
+    setCountTimer(true);
     const orderId = orderDetail?._id;
     const status = orderDetail?.status;
     if (orderId && status.includes("pending")) {
-      setCountTimer(true);
       deleteParticularOrderAPI(orderId)
         .then((data) => {
           if (data) {
@@ -32,7 +32,6 @@ function OrderDetailDesign({ orderDetail }) {
                 .then((data) => {
                   localStorage.setItem("user", JSON.stringify(data.data));
                   navigate("/");
-                  window.location.reload();
                 })
                 .catch((err) => {
                   console.log("error", err);

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../store/redux-features/userSlice";
 import { updateUserAccountAPI } from "../api/userApi";
 import { useNavigate } from "react-router-dom";
+import CountDown from "../utils/CountDown";
 
 function UpdateProfile() {
 
@@ -16,11 +17,17 @@ function UpdateProfile() {
   const [check,setCheck] = useState(false)
   const [error,setError] = useState(false)
   const navigate = useNavigate()
-  
+  const [CountTimer,setCountTimer] = useState(false)
+
+
+    const closeCountTimer=()=>{
+      setCountTimer(false)
+    }
 
   function handleSubmit(e){
     e.preventDefault()
     if(check && name && address && contact && email){
+      setCountTimer(true)
       if(email.includes('@')){
         setError(false)
         
@@ -34,7 +41,7 @@ function UpdateProfile() {
           localStorage.setItem('refreshToken',refreshToken)
           localStorage.setItem('accessToken',accessToken)
           navigate("/")
-          window.location.reload()
+          // window.location.reload()
           
         })
         .catch((error)=>{
@@ -56,6 +63,10 @@ function UpdateProfile() {
 
   return (
     <div>
+
+       {/* COUNTDOWN */}
+  {CountTimer && <CountDown onClose={closeCountTimer}  />}
+        
       
       {/* header */}
       <div className="flex justify-center items-center mt-4 mb-5">

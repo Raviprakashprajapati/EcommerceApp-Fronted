@@ -31,7 +31,11 @@ function ProductDetailDesign({detail}) {
   const [o,setO] = useState(null)
   const [CountTimer,setCountTimer] = useState(false)
   const [relatedProductData,setRelatedProductData] = useState(null)
+  const [flag,setFlag] = useState(false)
 
+  useEffect(()=>{
+
+  },[flag])
 
 
   const closeCountTimer=()=>{
@@ -134,7 +138,8 @@ function ProductDetailDesign({detail}) {
           addProductReviewAPI({productId:detail?._id,comment:inputReviewComment,rating:inputReviewStar})
           .then((data)=>{
             console.log(data)
-            window.location.reload()
+            setFlag((prev)=>!prev)
+
           })
           .catch((err)=>{
             console.log("Err ",err)
@@ -156,7 +161,6 @@ function ProductDetailDesign({detail}) {
           localStorage.setItem('user',JSON.stringify(data.data))
           console.log("cart ",data)
           navigate("/order")
-          // window.location.reload()
         
         })
       }
@@ -170,9 +174,9 @@ function ProductDetailDesign({detail}) {
 
   function handleAddToCart(){
 
+    setCountTimer(true)
     addToCartAPI(detail?._id)
     .then((data)=>{
-      setCountTimer(true)
       
       if(data){
         getCurrentUserAPI(user?._id)
@@ -180,7 +184,6 @@ function ProductDetailDesign({detail}) {
           localStorage.setItem('user',JSON.stringify(data?.data))
           console.log("cart ",data)
         navigate("/cart")
-        // window.location.reload()
         })
 
 

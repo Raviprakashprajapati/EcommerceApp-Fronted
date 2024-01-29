@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { deleteParticularOrderAPI, ordersUserAPI } from '../api/orderApi'
 import cartImage02 from "../../assets/image/cartImage02.png";
-import Loader from '../utils/Loader';
 import CountDown from '../utils/CountDown';
 import { getCurrentUserAPI } from '../api/userApi';
 import { useSelector } from 'react-redux';
@@ -13,6 +12,11 @@ function AllOrders() {
   const user = useSelector(selectCurrentUser)
   const [order,setOrder] = useState(null)
   const [CountTimer,setCountTimer] = useState(false)
+  const [flag,setFlag] = useState(false)
+
+  useEffect(()=>{
+
+  },[flag])
 
 
   useEffect(()=>{
@@ -47,8 +51,7 @@ function AllOrders() {
             getCurrentUserAPI(user._id)
             .then((data)=>{
               localStorage.setItem('user',JSON.stringify(data.data))
-              // console.log("cart ",data)
-              window.location.reload()
+              setFlag((prev)=>!prev)
             }).catch((err)=>{
               console.log("error",err)
             })
@@ -88,7 +91,7 @@ function AllOrders() {
         {
         !order?
         <div>
-          <img src={cartImage02} className="mt-5 block m-auto" alt="" />
+          <img src={cartImage02} className="mt-5 block m-auto h-[12rem] " alt="" />
           <p className="mt-3 text-gray-400 text-center md:text-xl" >Nothing in your Order</p>
         </div>:null
       }

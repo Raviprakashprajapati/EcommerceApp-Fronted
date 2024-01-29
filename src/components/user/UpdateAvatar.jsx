@@ -9,6 +9,7 @@ function UpdateAvatar() {
   const [modelOpen,setModelOpen] = useState(false)
   const [avatar,setAvatar] = useState(null)
   const [check,setCheck] = useState(false)
+  const [error,setError] = useState(false)
 
   const closeModal=()=>{
     setModelOpen(false)
@@ -18,7 +19,6 @@ function UpdateAvatar() {
     const file = e.target.files[0]
     if(file){
       setAvatar(file)
-
     }
 
   }
@@ -34,6 +34,7 @@ function UpdateAvatar() {
 
         updateUserAvatarAPI(formData)
         .then((data)=>{
+          setError(!error)
           console.log(data)
           const accessToken = localStorage.getItem('accessToken')
           const refreshToken = localStorage.getItem('refreshToken')
@@ -41,11 +42,12 @@ function UpdateAvatar() {
           localStorage.setItem('user',JSON.stringify(data.data))
           localStorage.setItem('refreshToken',refreshToken)
           localStorage.setItem('accessToken',accessToken)
-          navigate("/profile")
-          window.location.reload()
+          navigate("/")
+          
 
         })
         .catch((error)=>{
+          setError(!error)
           console.log("error", error)
         })
       }
@@ -124,6 +126,10 @@ function UpdateAvatar() {
           </label>
         </div>
 
+        {
+          error?<p className="text-black text-sm text-center mt-2 mb-2" >Something went wrong while Updating Avatar Try again Later</p>
+:null
+        }
         <button
         onClick={handleSubmit}
           type="submit"

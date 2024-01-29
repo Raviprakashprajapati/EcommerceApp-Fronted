@@ -26,7 +26,6 @@ function ChangePassword() {
       .then((data)=>{
         // console.log("data ",data)
         navigate("/profile")
-        window.location.reload()
 
       })
       .catch((err)=>{

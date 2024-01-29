@@ -78,7 +78,7 @@ function UserProfileDesign({name,email,username,contact,address,password,avatar}
         {/* profile photu */}
         <div class="py-8 px-8 max-w-sm mx-auto bg-white rounded-xl shadow-lg space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6">
           <img
-            class="block mx-auto h-24 rounded-full sm:mx-0 sm:shrink-0"
+            class="block mx-auto h-24 rounded-lg sm:mx-0 sm:shrink-0"
             src={avatar ?avatar:"https://img.freepik.com/free-vector/isolated-young-handsome-man-different-poses-white-background-illustration_632498-855.jpg?w=740&t=st=1705485638~exp=1705486238~hmac=aa6aeab85319b5d00d9672285c339cbc5ac0ed007d92fbe52d8d93d7ff0bec48" }
             alt="profileImage"
           />
