@@ -57,7 +57,7 @@ function Cart() {
           .then((data)=>{
             localStorage.setItem('user',JSON.stringify(data.data))
             // console.log("cart ",data)
-            window.location.reload()
+            // window.location.reload()
           }).catch((err)=>{
             console.log("error",err)
           })
@@ -88,7 +88,7 @@ function Cart() {
           .then((data)=>{
             localStorage.setItem('user',JSON.stringify(data.data))
             // console.log("cart ",data)
-            window.location.reload()
+            // window.location.reload()
           }).catch((err)=>{
             
             console.log("error: ",err)
@@ -116,7 +116,7 @@ function Cart() {
           .then((data)=>{
             localStorage.setItem('user',JSON.stringify(data.data))
             // console.log("cart ",data)
-            window.location.reload()
+            // window.location.reload()
           }).catch((err)=>{
             
             console.log("error",err)
@@ -144,7 +144,7 @@ function Cart() {
           .then((data)=>{
             localStorage.setItem('user',JSON.stringify(data.data))
             // console.log("cart ",data)
-            window.location.reload()
+            // window.location.reload()
           }).catch((err)=>{
             
             console.log("error",err)

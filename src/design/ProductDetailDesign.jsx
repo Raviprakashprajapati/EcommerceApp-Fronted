@@ -180,7 +180,7 @@ function ProductDetailDesign({detail}) {
           localStorage.setItem('user',JSON.stringify(data?.data))
           console.log("cart ",data)
         navigate("/cart")
-        window.location.reload()
+        // window.location.reload()
         })
 
 
