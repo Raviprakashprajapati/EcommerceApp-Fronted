@@ -156,7 +156,7 @@ function ProductDetailDesign({detail}) {
           localStorage.setItem('user',JSON.stringify(data.data))
           console.log("cart ",data)
           navigate("/order")
-          window.location.reload()
+          // window.location.reload()
         
         })
       }
@@ -177,7 +177,7 @@ function ProductDetailDesign({detail}) {
       if(data){
         getCurrentUserAPI(user?._id)
         .then((data)=>{
-          localStorage.setItem('user',JSON.stringify(data.data))
+          localStorage.setItem('user',JSON.stringify(data?.data))
           console.log("cart ",data)
         navigate("/cart")
         window.location.reload()
