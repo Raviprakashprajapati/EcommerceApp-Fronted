@@ -27,7 +27,7 @@ function Cart() {
   const [incrementError, setIncrementError] = useState(false);
   const [updateCartFlag, setUpdateCartFlag] = useState(false);
 
-  useEffect(() => {});
+  useEffect(()=>{},[updateCartFlag])
 
   //display carts
   useEffect(() => {
@@ -43,7 +43,7 @@ function Cart() {
           console.log("error: " + err);
         });
     }
-  }, [updateCartFlag]);
+  }, []);
 
   const closeCountTimer = () => {
     setCountTimer(false);
@@ -138,7 +138,7 @@ function Cart() {
     <div>
       {incrementError ? <div onClick={notifyOutOfStock()}></div> : null}
 
-      <CustomToast />
+      {/* <CustomToast /> */}
 
       {/* COUNTDOWN */}
       {CountTimer && <CountDown onClose={closeCountTimer} />}

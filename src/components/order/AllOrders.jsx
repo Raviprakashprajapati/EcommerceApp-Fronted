@@ -51,7 +51,7 @@ function AllOrders() {
             getCurrentUserAPI(user._id)
             .then((data)=>{
               localStorage.setItem('user',JSON.stringify(data.data))
-              setFlag((prev)=>!prev)
+              setFlag(!flag)
             }).catch((err)=>{
               console.log("error",err)
             })
