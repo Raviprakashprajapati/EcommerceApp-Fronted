@@ -2,11 +2,28 @@ import axios from "axios";
 
 const productBaseURl = 'https://fullmernecommerceapp.onrender.com/api/v1/products'
 
+
+const axioswithToken = axios.create({
+    baseURL:productBaseURl,
+    withCredentials:true,
+    headers:{
+        'Content-Type':"application/json"
+    }
+})
+
+const token = localStorage.getItem('accessToken') || null;
+if(token){
+    axioswithToken.defaults.headers['Authorization'] = 'Bearer ' + token
+}
+
+
+
+
 export const getUserReviewsAPI = async() =>{
 
     try {
 
-        const response = await axios.get(`${productBaseURl}/myreviews`)
+        const response = await axioswithToken.get(`/myreviews`)
         return response.data
         
     } catch (error) {
@@ -16,7 +33,6 @@ export const getUserReviewsAPI = async() =>{
 }
 
 
-//later
 
 export const allProductsAPI = async() =>{
     try {
@@ -61,10 +77,15 @@ export const productReviewsAPI = async(productId) =>{
     }
 }
 
+
+
+
+//need token
+
 export const addProductReviewAPI = async(data) =>{
     try {
         //data->{productId,comment,rating}
-        const response = await axios.post(`${productBaseURl}/add-review`,data)
+        const response = await axioswithToken.post(`/add-review`,data)
         return response.data
         
     } catch (error) {
@@ -75,7 +96,7 @@ export const addProductReviewAPI = async(data) =>{
 export const deleteProductReviewAPI = async(reviewId) =>{
     try {
 
-        const response = await axios.delete(`${productBaseURl}/reviews`,reviewId)
+        const response = await axioswithToken.delete(`/reviews`,reviewId)
         return response.data
         
     } catch (error) {

@@ -40,7 +40,7 @@ export const getCurrentUserAPI = async(id) =>{
 
 export const logoutAPI = async() =>{
     try {
-        const response = await axios.post(`${userBaseURL}/logout`)
+        const response = await axioswithToken.post(`/logout`)
         return response.data
         
     } catch (error) {
@@ -50,7 +50,7 @@ export const logoutAPI = async() =>{
 
 export const  registerUserAPI = async(userData) =>{
     try {
-        const response = await axios.post(`${userBaseURL}/register`, userData);
+        const response = await axioswithToken.post(`/register`, userData);
         return response.data;
       } catch (error) {
         throw error;
@@ -61,7 +61,7 @@ export const  registerUserAPI = async(userData) =>{
 export const  changeUserPasswordAPI = async(data) =>{
     try {
 
-        const response = await axios.post(`${userBaseURL}/change-password`, data);
+        const response = await axioswithToken.post(`/change-password`, data);
         return response.data;
         
     } catch (error) {
@@ -72,7 +72,7 @@ export const  changeUserPasswordAPI = async(data) =>{
 export const updateUserAccountAPI = async(data) =>{
     try {
 
-        const response = await axios.post(`${userBaseURL}/update-account`,data)
+        const response = await axioswithToken.post(`/update-account`,data)
         return response.data
         
     } catch (error) {
@@ -83,7 +83,7 @@ export const updateUserAccountAPI = async(data) =>{
 export const updateUserAvatarAPI = async(data) =>{
     try {
 
-        const response = await axios.patch(`${userBaseURL}/avatar`,data)
+        const response = await axioswithToken.patch(`/avatar`,data)
         return response.data
         
     } catch (error) {
@@ -93,7 +93,7 @@ export const updateUserAvatarAPI = async(data) =>{
 
 export const deactivateUserAPI = async() =>{
     try {
-        const response = await axios.delete(`${userBaseURL}/delete-current-user`)
+        const response = await axioswithToken.delete(`/delete-current-user`)
         return response.data
         
     } catch (error) {

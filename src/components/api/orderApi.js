@@ -2,10 +2,29 @@ import axios from "axios";
 
 const orderBaseURL = 'https://fullmernecommerceapp.onrender.com/api/v1/orders'
 
+
+
+const axioswithToken = axios.create({
+    baseURL:orderBaseURL,
+    withCredentials:true,
+    headers:{
+        'Content-Type':"application/json"
+    }
+})
+
+const token = localStorage.getItem('accessToken') || null;
+if(token){
+    axioswithToken.defaults.headers['Authorization'] = 'Bearer ' + token
+}
+
+
+
+
+
 export const ordersUserAPI = async() =>{
     try {
 
-        const response = await axios.get(`${orderBaseURL}/all-orders`)
+        const response = await axioswithToken.get(`${orderBaseURL}/all-orders`)
         return response.data
         
     } catch (error) {
@@ -17,7 +36,7 @@ export const ordersUserAPI = async() =>{
 export const orderDetailAPI = async(id) =>{
     try {
 
-        const response = await axios.get(`${orderBaseURL}/get-order/${id}`)
+        const response = await axioswithToken.get(`${orderBaseURL}/get-order/${id}`)
         return response.data
         
     } catch (error) {
@@ -29,7 +48,7 @@ export const orderDetailAPI = async(id) =>{
 export const addOrderAPI = async(data) =>{
     try {
         //{productId,quantity}
-        const response = await axios.post(`${orderBaseURL}/add-order`,data)
+        const response = await axioswithToken.post(`${orderBaseURL}/add-order`,data)
         return response.data
         
     } catch (error) {
@@ -40,7 +59,7 @@ export const addOrderAPI = async(data) =>{
 export const addCartToOrderAPI = async() =>{
     try {
 
-        const response = await axios.post(`${orderBaseURL}/add-cart-order`)
+        const response = await axioswithToken.post(`${orderBaseURL}/add-cart-order`)
         return response.data
         
     } catch (error) {
@@ -52,7 +71,7 @@ export const addCartToOrderAPI = async() =>{
 export const deleteParticularOrderAPI = async(orderId) =>{
     try {
        
-        const response = await axios.delete(`${orderBaseURL}/delete-order/${orderId}`)
+        const response = await axioswithToken.delete(`${orderBaseURL}/delete-order/${orderId}`)
         return response.data
         
     } catch (error) {

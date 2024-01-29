@@ -1,8 +1,20 @@
 import axios from "axios";
 
-const adminUserBaseURL = 'https://fullmernecommerceapp.onrender.com/api/v1/users/admin'
-const adminProductBaseURL = 'https://fullmernecommerceapp.onrender.com/api/v1/products/admin'
-const adminOrderBaseURL = 'https://fullmernecommerceapp.onrender.com/api/v1/orders/admin'
+const adminBaseUrl = "https://fullmernecommerceapp.onrender.com"
+
+
+const axioswithToken = axios.create({
+    baseURL:adminBaseUrl,
+    withCredentials:true,
+    headers:{
+        'Content-Type':"application/json"
+    }
+})
+
+const token = localStorage.getItem('accessToken') || null;
+if(token){
+    axioswithToken.defaults.headers['Authorization'] = 'Bearer ' + token
+}
 
 
 //user
@@ -10,7 +22,7 @@ const adminOrderBaseURL = 'https://fullmernecommerceapp.onrender.com/api/v1/orde
 export const adminLoginAPI = async(data) =>{
     try {
         // username,emal,password
-        const response = await axios.post(`${adminUserBaseURL}/login`,data)
+        const response = await axioswithToken.post(`/api/v1/users/admin/login`,data)
         return response.data
         
     } catch (error) {
@@ -21,7 +33,7 @@ export const adminLoginAPI = async(data) =>{
 export const adminLogoutAPI = async() =>{
     try {
 
-        const response = await axios.post(`${adminUserBaseURL}/logout`)
+        const response = await axioswithToken.post(`/api/v1/users/admin/logout`)
         return response.data
         
     } catch (error) {
@@ -32,7 +44,7 @@ export const adminLogoutAPI = async() =>{
 export const adminGetAllUsersAPI = async() =>{
     try {
 
-        const response = await axios.get(`${adminUserBaseURL}/users`)
+        const response = await axioswithToken.get(`/api/v1/users/admin/users`)
         return response.data
         
     } catch (error) {
@@ -43,7 +55,7 @@ export const adminGetAllUsersAPI = async() =>{
 export const adminDeletePerUserAPI = async(id) =>{
     try {
 
-        const response = await axios.delete(`${adminUserBaseURL}/${id}`)
+        const response = await axioswithToken.delete(`/api/v1/users/admin/${id}`)
         return response.data
         
     } catch (error) {
@@ -57,7 +69,7 @@ export const adminDeletePerUserAPI = async(id) =>{
 export const adminGetAllProductsAPI = async() =>{
     try {
 
-        const response = await axios.get(`${adminProductBaseURL}/products`)
+        const response = await axioswithToken.get(`/api/v1/products/admin/products`)
         return response.data
         
     } catch (error) {
@@ -68,7 +80,7 @@ export const adminGetAllProductsAPI = async() =>{
 export const adminAddProductAPI = async(data) =>{
     try {
 
-        const response = await axios.post(`${adminProductBaseURL}/add-product`,data)
+        const response = await axioswithToken.post(`/api/v1/products/admin/add-product`,data)
         return response.data
         
     } catch (error) {
@@ -79,7 +91,7 @@ export const adminAddProductAPI = async(data) =>{
 export const adminUpdateProductAPI = async(id,body) =>{
     try {
 
-        const response = await axios.patch(`${adminProductBaseURL}/update-product/${id}`,body)
+        const response = await axioswithToken.patch(`/api/v1/products/admin/update-product/${id}`,body)
         return response.data
         
     } catch (error) {
@@ -90,7 +102,7 @@ export const adminUpdateProductAPI = async(id,body) =>{
 export const adminDeleteProductAPI = async(id) =>{
     try {
 
-        const response = await axios.delete(`${adminProductBaseURL}/delete-product/${id}`)
+        const response = await axioswithToken.delete(`/api/v1/products/admin/delete-product/${id}`)
         return response.data
         
     } catch (error) {
@@ -104,7 +116,7 @@ export const adminDeleteProductAPI = async(id) =>{
 export const adminGetAllOrders = async() =>{
     try {
 
-        const response = await axios.get(`${adminOrderBaseURL}/orders`)
+        const response = await axioswithToken.get(`/api/v1/products/admin/orders`)
         return response.data
         
     } catch (error) {
@@ -115,7 +127,7 @@ export const adminGetAllOrders = async() =>{
 export const adminGetOrderDetail = async(orderId)=>{
     try {
 
-        const response = await axios.get(`${adminOrderBaseURL}/orderDetail/${orderId}`)
+        const response = await axioswithToken.get(`/api/v1/products/admin/orderDetail/${orderId}`)
         return response.data
         
     } catch (error) {
@@ -126,7 +138,7 @@ export const adminGetOrderDetail = async(orderId)=>{
 export const adminUpdateOrderAPI = async(id,status) =>{
     try {
 
-        const response = await axios.patch(`${adminOrderBaseURL}/update-order-status/${id}`,status)
+        const response = await axioswithToken.patch(`/api/v1/products/admin/update-order-status/${id}`,status)
         return response.data
         
     } catch (error) {
@@ -137,7 +149,7 @@ export const adminUpdateOrderAPI = async(id,status) =>{
 export const adminDashboardAPI = async() =>{
     try {
 
-        const response = await axios.get(`${adminProductBaseURL}/dashboard`)
+        const response = await axioswithToken.get(`/api/v1/products/admin/dashboard`)
         return response.data
     } catch (error) {
         throw error
