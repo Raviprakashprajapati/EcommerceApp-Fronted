@@ -18,7 +18,12 @@ function Cart() {
   const [cart,setCart] = useState(null)
   const [CountTimer,setCountTimer] = useState(false)
   const [incrementError,setIncrementError] = useState(false)
+  const [updateCartFlag,setUpdateCartFlag] = useState(false)
 
+
+  useEffect(()=>{
+
+  },)
 
   //display carts
   useEffect(()=>{
@@ -37,7 +42,7 @@ function Cart() {
       })
 
     }
-  },[])
+  },[updateCartFlag])
 
   
   const closeCountTimer=()=>{
@@ -58,6 +63,7 @@ function Cart() {
             localStorage.setItem('user',JSON.stringify(data.data))
             // console.log("cart ",data)
             // window.location.reload()
+            setUpdateCartFlag((prev)=>!prev)
           }).catch((err)=>{
             console.log("error",err)
           })
