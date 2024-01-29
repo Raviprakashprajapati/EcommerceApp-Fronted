@@ -2,9 +2,34 @@ import axios from "axios";
 
 const userBaseURL = 'https://fullmernecommerceapp.onrender.com/api/v1/users'
 
+
+const axioswithToken = axios.create({
+    baseURL:userBaseURL,
+    withCredentials:true,
+    headers:{
+        'Content-Type':"application/json"
+    }
+})
+
+const token = localStorage.getItem('accessToken') || null;
+if(token){
+    axioswithToken.defaults.headers['Authorization'] = 'Bearer ' + token
+}
+
+
+export const loginUserAPI = async(loginData) =>{
+    try {
+        const response = await axioswithToken.post(`/login`,loginData);
+        return response.data
+    } catch (error) {
+        throw error;        
+    }
+}
+
+
 export const getCurrentUserAPI = async(id) =>{
     try {
-        const response = await axios.get(`${userBaseURL}/current-user/${id}`)
+        const response = await axioswithToken.get(`/current-user/${id}`)
         return response.data
         
     } catch (error) {
@@ -12,14 +37,6 @@ export const getCurrentUserAPI = async(id) =>{
     }
 }
 
-export const loginUserAPI = async(loginData) =>{
-    try {
-        const response = await axios.post(`${userBaseURL}/login`,loginData);
-        return response.data
-    } catch (error) {
-        throw error;        
-    }
-}
 
 export const logoutAPI = async() =>{
     try {
