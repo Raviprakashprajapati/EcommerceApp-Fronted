@@ -120,7 +120,7 @@ function AdminUsersDesign({ user }) {
                   {index + 1}: {i?.name}
                 </th>
                 <td class="px-6 py-4">
-                  <img src={i?.profileImage} alt="" />
+                  <img src={i?.profileImage} className="w-[50px] md:w-[70px]" alt="" />
                 </td>
                 <td class="px-6 py-4">{i?.email}</td>
                 <td class="px-6 py-4">{i?.username}</td>

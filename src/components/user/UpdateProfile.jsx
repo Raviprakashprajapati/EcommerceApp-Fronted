@@ -41,7 +41,7 @@ function UpdateProfile() {
           localStorage.setItem('refreshToken',refreshToken)
           localStorage.setItem('accessToken',accessToken)
           navigate("/")
-          // window.location.reload()
+          window.location.reload()
           
         })
         .catch((error)=>{

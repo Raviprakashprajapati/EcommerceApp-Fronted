@@ -156,7 +156,7 @@ function UserProfileDesign({name,email,username,contact,address,password,avatar}
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-4 rounded shadow-md">
             {/* Password content goes here */}
-            <p className="text-lg font-semibold">Your Password: ********</p>
+            <p className="text-lg font-semibold">Your Password: {localStorage.getItem("password")|| "*******"}</p>
             <button
               onClick={togglePasswordPopup}
               className="mt-4 bg-red-500 text-white py-2 px-4 rounded"

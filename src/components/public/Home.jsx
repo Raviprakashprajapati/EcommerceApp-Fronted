@@ -132,7 +132,7 @@ function Home() {
                      className="text-gray-900 dark:text-white hover:underline"
                      >
                 
-                  Iphone
+                  Apple
                 </Link>
               </li>
               <li>

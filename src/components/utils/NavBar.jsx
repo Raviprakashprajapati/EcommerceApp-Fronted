@@ -79,7 +79,7 @@ function NavBar() {
       {sideBarToggle ? (
         <Sidebar
           aria-label="Sidebar with logo branding example"
-          className=" fixed h-screen z-50  border-2 border-black "
+          className=" fixed h-screen z-50  border-black "
         >
           <Sidebar.Logo
             className="hover:cursor-pointer"
@@ -89,6 +89,7 @@ function NavBar() {
               src={logo}
               className="ml-[-15px]  w-[9rem] sm:h-15"
               alt="Flowbite React Logo"
+              onClick={()=>navigate("/")}
             />
           </Sidebar.Logo>
 
@@ -102,13 +103,13 @@ function NavBar() {
 
                 {user ? (
                   <Link to="/profile">
-                    <p className="text-black hover:cursor-pointer font-semibold ml-[-17px] ">
+                    <p className="text-white p-2 rounded-lg w-full text-center hover:bg-slate-800 hover:cursor-pointer font-semibold ml-[-17px] ">
                       Profile
                     </p>
                   </Link>
                 ) : (
                   <p
-                    className="text-black hover:cursor-pointer font-semibold ml-[-17px] "
+                    className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px] "
                     onClick={notify}
                   >
                     Profile
@@ -123,13 +124,13 @@ function NavBar() {
                 <Sidebar.Item href="#" icon={HiViewBoards}></Sidebar.Item>
                 {user ? (
                   <Link to="/cart">
-                    <p className="text-black hover:cursor-pointer font-semibold ml-[-17px] ">
+                    <p className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px] ">
                       Cart
                     </p>
                   </Link>
                 ) : (
                   <p
-                    className="text-black hover:cursor-pointer font-semibold ml-[-17px] "
+                    className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 first-letter:hover:cursor-pointer font-semibold ml-[-17px] "
                     onClick={notify}
                   >
                     Cart
@@ -144,14 +145,14 @@ function NavBar() {
                 <Sidebar.Item href="#" icon={HiInbox}></Sidebar.Item>
                 {user ? (
                   <Link to="/order">
-                    <p className="text-black hover:cursor-pointer font-semibold ml-[-17px] ">
+                    <p className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px] ">
                       Orders
                     </p>
                   </Link>
                 ) : (
                   <p
                     onClick={notify}
-                    className="text-black hover:cursor-pointer font-semibold ml-[-17px] "
+                    className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px] "
                   >
                     Orders
                   </p>
@@ -165,21 +166,21 @@ function NavBar() {
                 <Sidebar.Item href="#" icon={HiUser}></Sidebar.Item>
                 {user ? (
                   <Link to="/myreviews">
-                    <p className="text-black hover:cursor-pointer font-semibold ml-[-17px] ">
+                    <p className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px] ">
                       Reviews
                     </p>
                   </Link>
                 ) : (
                   <p
                     onClick={notify}
-                    className="text-black hover:cursor-pointer font-semibold ml-[-17px] "
+                    className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px] "
                   >
                     Reviews
                   </p>
                 )}
               </div>
 
-              <div
+              {/* <div
                 className="flex items-center justify-start "
                 onClick={() => setSidebarToggle(!sideBarToggle)}
               >
@@ -198,7 +199,7 @@ function NavBar() {
                     Products
                   </p>
                 )}
-              </div>
+              </div> */}
 
               {user ? (
                 <div
@@ -208,7 +209,7 @@ function NavBar() {
                   <Sidebar.Item href="#" icon={HiArrowSmRight}></Sidebar.Item>
                   <Link to="/">
                     <p
-                      className="text-white text-sm font-semibold ml-[-17px] bg-red-600 p-3 rounded-lg "
+                      className="text-white text-sm font-semibold ml-[-17px] bg-red-600 p-3 rounded-lg w-[6.5rem] text-center "
                       onClick={handleLogout}
                     >
                       Logout
@@ -222,7 +223,7 @@ function NavBar() {
                 >
                   <Sidebar.Item href="#" icon={HiArrowSmRight}></Sidebar.Item>
                   <Link to="/login">
-                    <p className="text-white text-sm font-semibold ml-[-17px] bg-slate-600 p-3 rounded-lg ">
+                    <p className="text-white text-sm font-semibold ml-[-17px] bg-slate-700 p-3 rounded-lg w-[6.5rem] text-center ">
                       Login
                     </p>
                   </Link>
@@ -235,8 +236,8 @@ function NavBar() {
               >
                 <Sidebar.Item href="#" icon={HiTable}></Sidebar.Item>
                 <Link to="/sign-up">
-                  <p className="text-white text-sm font-semibold ml-[-17px] bg-slate-600 p-3 rounded-lg ">
-                    Sign-Up
+                  <p className="text-white w-[6.5rem] text-sm font-semibold ml-[-17px] bg-slate-700 p-3 text-center rounded-lg ">
+                    Sign-Up  
                   </p>
                 </Link>
               </div>
@@ -249,7 +250,7 @@ function NavBar() {
                   <Sidebar.Item href="#" icon={HiArrowSmRight}></Sidebar.Item>
                   <Link>
                     <p
-                      className="text-white text-sm font-semibold ml-[-17px] bg-red-600 p-3 rounded-lg "
+                      className="text-white w-[6.5rem] text-sm font-semibold ml-[-17px] bg-red-600 p-3 rounded-lg  "
                       onClick={handleAdminLogout}
                     >
                       Admin Logout
@@ -263,7 +264,7 @@ function NavBar() {
                 >
                   <Sidebar.Item href="#" icon={HiArrowSmRight}></Sidebar.Item>
                   <Link to="/admin/login">
-                    <p className="text-white text-sm font-semibold ml-[-17px] bg-slate-600 p-3 rounded-lg ">
+                    <p className="text-white text-sm font-semibold ml-[-17px] bg-slate-700 p-3 rounded-lg  ">
                       Admin Login
                     </p>
                   </Link>
@@ -276,19 +277,23 @@ function NavBar() {
                   onClick={() => setSidebarToggle(!sideBarToggle)}
                 >
                   {" "}
-                  <p className="text-black text-sm mt-5 font-serif font-semibold ">
-                    About
+                  <p className="text-white bg-orange-500 p-2 hover:bg-orange-700 rounded-lg text-center text-sm mt-5 font-serif font-semibold ">
+                    About us
                   </p>
                 </Link>
                 <Link
                   to="/contact"
                   onClick={() => setSidebarToggle(!sideBarToggle)}
                 >
-                  <p className="text-black text-sm mt-2 font-serif font-semibold ">
+                  <p className="text-white bg-orange-500 hover:bg-orange-700 p-2 rounded-lg text-center text-sm mt-2 font-serif font-semibold ">
                     Contact
                   </p>
                 </Link>
               </div>
+                <div className="text-center fixed bottom-2 " >
+                  
+              <a href="https://raviprakashprajapati.netlify.app/" className="text-center text-blue-700 font-serif text-sm "  target="_blank">Ravi...</a>
+                </div>
             </Sidebar.ItemGroup>
           </Sidebar.Items>
         </Sidebar>

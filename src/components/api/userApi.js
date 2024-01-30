@@ -125,3 +125,15 @@ export const GetFeedbackUserAPI = async() =>{
     }
 }
 
+
+export const getUserFromRefreshToken = async() =>{
+    try {
+        const response = await axios.get(`${userBaseURL}/refresh-token`,{refreshToken:localStorage.getItem("refreshToken")})
+        return response.data
+        
+    } catch (error) {
+        throw error
+    }
+}
+
+
