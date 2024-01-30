@@ -20,14 +20,14 @@ import CustomToast from "../utils/CustomToast";
 function Cart() {
 
 
-  const notifyOutOfStock = () => toast("Product out of Stock");
+  const notifyOutOfStock = () => toast("");
   const user = useSelector(selectCurrentUser);
   const [cart, setCart] = useState(null);
   const [CountTimer, setCountTimer] = useState(false);
   const [incrementError, setIncrementError] = useState(false);
   const [updateCartFlag, setUpdateCartFlag] = useState(false);
 
-  useEffect(()=>{},[updateCartFlag])
+  // useEffect(()=>{},[updateCartFlag])
 
   //display carts
   useEffect(() => {
@@ -59,8 +59,8 @@ function Cart() {
               .then((data) => {
                 localStorage.setItem("user", JSON.stringify(data.data));
                 // console.log("cart ",data)
-                // window.location.reload()
-                setUpdateCartFlag((prev) => !prev);
+                window.location.reload()
+                // setUpdateCartFlag((prev) => !prev);
               })
               .catch((err) => {
                 console.log("error", err);
@@ -83,7 +83,8 @@ function Cart() {
           getCurrentUserAPI(user._id)
             .then((data) => {
               localStorage.setItem("user", JSON.stringify(data.data));
-              setUpdateCartFlag((prev)=>!prev)
+              window.location.reload();
+              // setUpdateCartFlag((prev)=>!prev)
             })
             .catch((err) => {
               console.log("error: ", err);
@@ -105,7 +106,8 @@ function Cart() {
           getCurrentUserAPI(user._id)
             .then((data) => {
               localStorage.setItem("user", JSON.stringify(data.data));
-              setUpdateCartFlag((prev)=>!prev)
+              window.location.reload();
+
             })
             .catch((err) => {
               console.log("error", err);
@@ -124,7 +126,8 @@ function Cart() {
           getCurrentUserAPI(user._id)
             .then((data) => {
               localStorage.setItem("user", JSON.stringify(data.data));
-              setUpdateCartFlag((prev)=>!prev)
+              window.location.reload();
+
             })
             .catch((err) => {
               console.log("error", err);
@@ -136,7 +139,7 @@ function Cart() {
 
   return (
     <div>
-      {incrementError ? <div onClick={notifyOutOfStock()}></div> : null}
+      {/* {incrementError ? <div onClick={notifyOutOfStock()}></div> : null} */}
 
       {/* <CustomToast /> */}
 

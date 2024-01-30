@@ -14,9 +14,9 @@ function AllOrders() {
   const [CountTimer,setCountTimer] = useState(false)
   const [flag,setFlag] = useState(false)
 
-  useEffect(()=>{
+  // useEffect(()=>{
 
-  },[flag])
+  // },[flag])
 
 
   useEffect(()=>{
@@ -51,7 +51,8 @@ function AllOrders() {
             getCurrentUserAPI(user._id)
             .then((data)=>{
               localStorage.setItem('user',JSON.stringify(data.data))
-              setFlag(!flag)
+              window.location.reload();
+
             }).catch((err)=>{
               console.log("error",err)
             })
