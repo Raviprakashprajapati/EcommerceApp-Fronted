@@ -109,6 +109,7 @@ function NavBar() {
                   </Link>
                 ) : (
                   <p
+                  className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px]"
                   
                     onClick={notify}
                   >
@@ -130,7 +131,7 @@ function NavBar() {
                   </Link>
                 ) : (
                   <p
-                   
+                  className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px]"
                     onClick={notify}
                   >
                     Cart
@@ -151,6 +152,7 @@ function NavBar() {
                   </Link>
                 ) : (
                   <p
+                  className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px]"
                     onClick={notify}
                     
                   >
@@ -172,6 +174,7 @@ function NavBar() {
                   </Link>
                 ) : (
                   <p
+                  className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px]"
                     onClick={notify}
                     
                   >
