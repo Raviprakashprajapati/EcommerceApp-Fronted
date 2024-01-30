@@ -103,13 +103,13 @@ function NavBar() {
 
                 {user ? (
                   <Link to="/profile" className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px]">
-                    <p className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px] ">
+                    <p >
                       Profile
                     </p>
                   </Link>
                 ) : (
                   <p
-                    className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px] "
+                  
                     onClick={notify}
                   >
                     Profile
@@ -124,13 +124,13 @@ function NavBar() {
                 <Sidebar.Item href="#" icon={HiViewBoards}></Sidebar.Item>
                 {user ? (
                   <Link to="/cart" className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px]">
-                    <p className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 first-letter:hover:cursor-pointer font-semibold ml-[-17px] ">
+                    <p >
                       Cart
                     </p>
                   </Link>
                 ) : (
                   <p
-                    className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 first-letter:hover:cursor-pointer font-semibold ml-[-17px] "
+                   
                     onClick={notify}
                   >
                     Cart
@@ -145,14 +145,14 @@ function NavBar() {
                 <Sidebar.Item href="#" icon={HiInbox}></Sidebar.Item>
                 {user ? (
                   <Link to="/order" className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px]">
-                    <p className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px] ">
+                    <p >
                       Orders
                     </p>
                   </Link>
                 ) : (
                   <p
                     onClick={notify}
-                    className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px] "
+                    
                   >
                     Orders
                   </p>
@@ -166,14 +166,14 @@ function NavBar() {
                 <Sidebar.Item href="#" icon={HiUser}></Sidebar.Item>
                 {user ? (
                   <Link to="/myreviews" className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px]">
-                    <p className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px] ">
+                    <p >
                       Reviews
                     </p>
                   </Link>
                 ) : (
                   <p
                     onClick={notify}
-                    className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px] "
+                    
                   >
                     Reviews
                   </p>
