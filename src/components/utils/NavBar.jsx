@@ -102,8 +102,8 @@ function NavBar() {
                 <Sidebar.Item href="#" icon={HiChartPie}></Sidebar.Item>
 
                 {user ? (
-                  <Link to="/profile">
-                    <p className="text-white p-2 rounded-lg w-full text-center hover:bg-slate-800 hover:cursor-pointer font-semibold ml-[-17px] ">
+                  <Link to="/profile" className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px]">
+                    <p className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px] ">
                       Profile
                     </p>
                   </Link>
@@ -123,8 +123,8 @@ function NavBar() {
               >
                 <Sidebar.Item href="#" icon={HiViewBoards}></Sidebar.Item>
                 {user ? (
-                  <Link to="/cart">
-                    <p className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px] ">
+                  <Link to="/cart" className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px]">
+                    <p className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 first-letter:hover:cursor-pointer font-semibold ml-[-17px] ">
                       Cart
                     </p>
                   </Link>
@@ -144,7 +144,7 @@ function NavBar() {
               >
                 <Sidebar.Item href="#" icon={HiInbox}></Sidebar.Item>
                 {user ? (
-                  <Link to="/order">
+                  <Link to="/order" className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px]">
                     <p className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px] ">
                       Orders
                     </p>
@@ -165,7 +165,7 @@ function NavBar() {
               >
                 <Sidebar.Item href="#" icon={HiUser}></Sidebar.Item>
                 {user ? (
-                  <Link to="/myreviews">
+                  <Link to="/myreviews" className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px]">
                     <p className="text-white bg-black w-full p-2 rounded-lg text-center hover:bg-slate-600 hover:cursor-pointer font-semibold ml-[-17px] ">
                       Reviews
                     </p>
