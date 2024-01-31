@@ -32,6 +32,7 @@ function ProductDetailDesign({detail}) {
   const [CountTimer,setCountTimer] = useState(false)
   const [relatedProductData,setRelatedProductData] = useState(null)
   const [flag,setFlag] = useState(false)
+  const [reviewTimer,setReviewTimer] = useState(false)
 
   useEffect(()=>{
 
@@ -132,13 +133,14 @@ function ProductDetailDesign({detail}) {
   function handleAddReview(e){
     e.preventDefault()
     if(inputReviewComment && inputReviewStar){
+      setReviewTimer(!reviewTimer)
         if(inputReviewStar>6){
         }else if(0<inputReviewStar){
 
           addProductReviewAPI({productId:detail?._id,comment:inputReviewComment,rating:inputReviewStar})
           .then((data)=>{
             console.log(data)
-            setFlag((prev)=>!prev)
+            window.location.reload();
 
           })
           .catch((err)=>{
@@ -430,7 +432,7 @@ function ProductDetailDesign({detail}) {
               </div>
             </div>
 
-            <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
+            <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6 z-20">
               {/* <!-- Description and details --> */}
               <div>
                 <h3 className="sr-only">Description</h3>
@@ -885,7 +887,10 @@ function ProductDetailDesign({detail}) {
                    />
                   </div>
                 </div>
-
+                      {
+                        reviewTimer?
+                        <p className="text-sm text-slate-700" >Wait for a while</p>:null
+                      }
                 {/* Submit button */}
                 <button
                   type="submit"
