@@ -79,15 +79,16 @@ function AllOrders() {
 
 
        {/* order header */}
-       <div class="flex items-center mt-6 justify-center">
-          {/* <img src={orderImage01} className="h-[7rem]" alt="" /> */}
-          <h2
-            class="text-lg ml-3 bg-black text-white p-4 rounded-lg font-medium "
-            id="slide-over-title text-center"
-          >
+       <div className="w-[93%] md:w-[40%] m-auto ">
+        <div className="px-4 sm:px-0 ">
+          <h3 className="text-lg bg-slate-600 text-white  font-semibold  leading-7 p-3 rounded-lg text-center">
             My Orders
-          </h2>
+          </h3>
+
+          
+        </div>{" "}
         </div>
+    
 
         {
         !order?

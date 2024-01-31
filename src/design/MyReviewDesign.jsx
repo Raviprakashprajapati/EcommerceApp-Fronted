@@ -18,7 +18,7 @@ function MyReviewDesign({comment,
       <div>
 
         {/* per review */}
-        <div class="p-6 w-[90%] mb-4 md:w-[70%] mx-auto bg-white m rounded-xl shadow-lg flex items-center space-x-4">
+        <div class="p-6 w-[90%] mb-4 md:w-[70%] mx-auto bg-white m rounded-xl shadow-lg flex items-center space-x-4 border-black">
           
           <div>
             <p class="text-black mb-3 text-sm pt-2 ">
@@ -30,8 +30,8 @@ function MyReviewDesign({comment,
             </div>
             <div class="flex justify-between text-base mt-3 md:text-lg font-medium items-center md:block text-black">
               <p>Rating : 3</p>
-              <p className="text-slate-600 text-sm" >{date}</p>
             </div>
+              <p className="text-slate-600 text-sm  " >{date}</p>
           </div>
         </div>
 

@@ -69,11 +69,17 @@ function UpdateProfile() {
         
       
       {/* header */}
-      <div className="flex justify-center items-center mt-4 mb-5">
-        <h3 className="bg-black p-3 font-lg rounded-lg text-white font-semibold">
-          Update Account
-        </h3>
-      </div><br /><br />
+      <br />
+      <div className="w-[93%] md:w-[40%] m-auto ">
+        <div className="px-4 sm:px-0 ">
+          <h3 className="text-lg bg-slate-600 text-white  font-semibold  leading-7 p-3 rounded-lg text-center">
+            Update Account
+          </h3>
+
+          
+        </div>{" "}
+        </div>
+    <br /><br />
 
 
     
