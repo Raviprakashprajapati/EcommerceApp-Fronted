@@ -20,7 +20,7 @@ function ProductCardHome({productHeaderName="Top Deals",data=[]}) {
                  <div  className="w-[200px] bg-sl bg-white shadow-lg rounded-lg overflow-hidden border border-slate-300 inline-block mx-2 my-4">
           <img
             className="w-[7rem] mt-1 h-[150px] md:h-[165px] m-auto "
-            src={index==0 ? i?.images?.[2] : i?.images?.[0]}
+            src={i?.price?.includes("1899")? i?.images?.[2] : i?.images?.[0]}
             alt="Product"
           />
 

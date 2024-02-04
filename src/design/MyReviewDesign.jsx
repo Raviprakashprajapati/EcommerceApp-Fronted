@@ -25,7 +25,7 @@ function MyReviewDesign({comment,
               {comment}
             </p>
             <div class=" text-[0.7rem]  font-medium text-white bg-black p-2 inline hover:bg-slate-800">
-              <Link>
+              <Link to={`/product-details/${product}`}  >
               Product</Link>
             </div>
             <div class="flex justify-between text-base mt-3 md:text-lg font-medium items-center md:block text-black">
