@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { searchAllProduct } from "../api/searchApi";
+import { searchAllProduct, searchByPrice } from "../api/searchApi";
 import { allProductsAPI } from "../api/productApi";
+import filter2 from "../../assets/image/filter2.png"
+import { useDispatch } from "react-redux";
+import { selectFilterSearchValue, setFilterSearchValue } from "../store/redux-features/searchSlice";
 
 function SearchBar() {
   const [inputSearch, setInputSearch] = useState("");
   const [product, setProduct] = useState(null);
   const navigate = useNavigate();
+  const [subCategory, setSubCategory] = useState("")
+  const [minPrice, setMinPrice] = useState("")
+  const [maxPrice, setMaxPrice] = useState("")
+  const [closeFilterDiv,setCloseFilterDiv] = useState(false)
+  const [priceError,setPriceError] = useState(false)
+  const dispatch = useDispatch()
+  
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (inputSearch === "") {
-    } else {
-      navigate(`/searchbar/${inputSearch}`);
-      setInputSearch("")
-    }
-  }
 
   useEffect(() => {
     allProductsAPI()
@@ -30,10 +32,55 @@ function SearchBar() {
       });
   }, []);
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (inputSearch === "") {
+    } else {
+      navigate(`/searchbar/${inputSearch}`);
+      setInputSearch("")
+    }
+  }
+
+  function handlePriceBarSubmit(){
+  
+    if(subCategory=="nothing" || minPrice =="" || maxPrice ==""){
+          setPriceError(true)
+          console.log("nothing")
+    }else{
+      setPriceError(false)
+
+      searchByPrice({subCategory,minPrice,maxPrice})
+      .then((data)=>{
+        
+
+        if(data?.data){
+          console.log("price data ",data)
+          setCloseFilterDiv(!closeFilterDiv)
+          dispatch(setFilterSearchValue(data?.data))
+          navigate("/searchBar/price")
+        }
+      }).catch((Err)=>{
+        console.log("price in error ",Err)
+      })
+      
+    }
+   
+   
+  }
+
+
+  
+
+
+
+
+
+
   return (
     <div className="mb-2">
       {/* searchbar */}
       <div className="w-[80%] md:w-[70%] m-auto">
+
         <form class="relative">
           <label
             for="default-search"
@@ -43,6 +90,7 @@ function SearchBar() {
           </label>
 
           <div class="flex items-center">
+
             <div class="relative w-full">
               <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <svg
@@ -72,19 +120,18 @@ function SearchBar() {
                 onChange={(e) => setInputSearch(e.target.value.toLowerCase())}
               />
 
-              {/* <button
-                type="submit"
-                class="text-white absolute top-0 right-0 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-2 py-[0.6rem] dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                onClick={handleSubmit}
-              >
-                Search
-              </button> */}
+              
             </div>
+
+            <div >
+            <img src={filter2} className="h-[1.3rem] ml-[4px]" alt="" onClick={()=>setCloseFilterDiv(!closeFilterDiv)}   />
+            </div>
+
           </div>
 
           {/* Display search results */}
           {inputSearch === "" ? null : (
-            <div className="mt-1 w-[80%] md:w-[70%] max-h-40 fixed z-50 bg-slate-600 text-white overflow-y-auto">
+            <div className="mt-1 w-[80%] md:w-[70%] max-h-40 fixed z-50 bg-black text-white overflow-y-auto rounded-lg ">
               {product ? (
                 <>
                   {product
@@ -128,6 +175,73 @@ function SearchBar() {
             </div>
           )}
         </form>
+
+
+    
+
+        
+
+
+
+          {/* second div */}
+        {
+          closeFilterDiv?  <div className="fixed top-0 right-0 left-0 z-50 flex items-center justify-center h-screen bg-gray-800 bg-opacity-50 ">
+          <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    
+           <div className="flex justify-between items-center" >
+           <h2 className="text-2xl font-semibold mb-4">Filter </h2>
+            <div onClick={()=>setCloseFilterDiv(!closeFilterDiv)} >❌</div>
+           </div>
+    
+            {/* Subcategory Filter */}
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700">Subcategory:</label>
+              <select className="mt-1 block w-full p-2 border rounded-md" id="subcategoryFilter" value={subCategory} onChange={(e)=>setSubCategory(e.target.value)} >
+                <option value="nothing">select one</option>
+                <option value="phone">Phone</option>
+                <option value="tv">TV</option>
+                <option value="shirt">Shirt</option>
+                <option value="tshirt">T-shirt</option>
+              </select>
+            </div>
+    
+            {/* Price Range Filter */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Price Range:</label>
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  placeholder="Min Price"
+                  className="mt-1 block w-1/2 p-2 mr-2 border rounded-md"
+                  value={minPrice}
+                  onChange={(e)=>setMinPrice(e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder="Max Price"
+                  className="mt-1 block w-1/2 p-2 border rounded-md"
+                  value={maxPrice}
+                  onChange={(e)=>setMaxPrice(e.target.value)}
+                />
+              </div>
+            </div>
+            {
+              priceError?<p className="text-red-600 text-sm text-center font-bold mt-4 " > All fields required </p>:null
+            }
+    
+            {/* Apply Button */}
+            <div className="mt-3">
+              <button className="bg-gray-800 text-white py-2 px-4 rounded-md hover:bg-gray-700" onClick={handlePriceBarSubmit} >
+                Apply Filters
+              </button>
+            </div>
+          </div>
+             </div>:null
+        }
+       
+
+
+
       </div>
     </div>
   );

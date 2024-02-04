@@ -35,6 +35,7 @@ import AdminProductsDesign from './design/AdminProductsDesign.jsx'
 import AdminProductDetail from './components/admin/AdminProductDetail.jsx'
 import { selectCurrentAdmin } from './components/store/redux-features/adminSlice.js'
 import AdminFeedback from './components/admin/AdminFeedback.jsx'
+import FilterProducts from './components/product/soloproduct/FilterProducts.jsx'
 
 function App() {
 
@@ -52,10 +53,14 @@ function App() {
     <Route path="/about" element={<Aboutus/>} />
     <Route path="/contact" element={<Contactus/>} />
     <Route path="/*" element={<PageNotFound/>} />
+
+    {/* SEARCH */}
     <Route path="/search/:product" element={<SoloProduct/>} />
     <Route path="/category/:category" element={<GridProduct/>} />
     <Route path="/searchDetail/:category" element={<EletronicProduct/>} />
     <Route path="/searchBar/:input" element={<SoloProduct/>} />
+    <Route path="/searchBar/price" element={<FilterProducts/>} />
+
 
     {/* USER */}
     <Route path='/sign-up' element={<Signup/>} />

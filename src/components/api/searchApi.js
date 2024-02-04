@@ -64,3 +64,15 @@ export const searchAllProduct = async() =>{
         throw error
     }
 }
+
+
+
+export const searchByPrice = async(body) =>{
+    try {
+        const response = await axios.post(`${searchBaseURL}/price`,body)
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
+
