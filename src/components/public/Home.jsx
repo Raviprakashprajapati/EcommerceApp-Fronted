@@ -206,22 +206,22 @@ function Home() {
       <div class="bg-white py-24 mt-[-90px] sm:py-32">
       <div class="flex justify-center mb-9">
             <dt class="text-base leading-7 text-gray-600"></dt>
-            <dd class="order-first text-3xl font-semibold tracking-tight text-slate-600 sm:text-5xl">{dashboard?.traffic}+ Traffic Frequency</dd>
+            <dd class="order-first text-3xl font-semibold tracking-tight text-slate-600 sm:text-5xl">{dashboard?.traffic-4548}+ Traffic Frequency</dd>
           </div><br />
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <dl class="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
         
           <div class="mx-auto flex max-w-xs flex-col gap-y-4">
             <dt class="text-base leading-7 text-gray-600">Total Registered Users</dt>
-            <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{dashboard?.users+40}<span className='font-serif' >+</span> Users</dd>
+            <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{dashboard?.users+20}<span className='font-serif' >+</span> Users</dd>
           </div>
           <div class="mx-auto flex max-w-xs flex-col gap-y-4">
             <dt class="text-base leading-7 text-gray-600"></dt>
-            <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{dashboard?.products+100}<span className='font-serif' >+</span> Products</dd>
+            <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{dashboard?.products+30}<span className='font-serif' >+</span> Products</dd>
           </div>
           <div class="mx-auto flex max-w-xs flex-col gap-y-4">
             <dt class="text-base leading-7 text-gray-600">Total Orders Placed</dt>
-            <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{dashboard?.orders+15}<span className='font-serif' >+</span> Orders</dd>
+            <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{dashboard?.orders+5}<span className='font-serif' >+</span> Orders</dd>
           </div>
         </dl>
       </div>
