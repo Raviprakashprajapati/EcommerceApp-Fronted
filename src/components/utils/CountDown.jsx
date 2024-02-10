@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function CountDown({onClose,timer=15}) {
+function CountDown({onClose,timer=10}) {
 
     const [countdown, setCountdown] = useState(timer);
 
