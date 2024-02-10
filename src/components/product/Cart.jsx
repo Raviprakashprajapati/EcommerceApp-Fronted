@@ -27,8 +27,7 @@ function Cart() {
   const [incrementError, setIncrementError] = useState(false);
   const [updateCartFlag, setUpdateCartFlag] = useState(false);
 
-  // useEffect(()=>{},[updateCartFlag])
-
+  
   //display carts
   useEffect(() => {
     if (user.cartsId) {
@@ -43,7 +42,7 @@ function Cart() {
           console.log("error: " + err);
         });
     }
-  }, []);
+  }, [updateCartFlag]);
 
   const closeCountTimer = () => {
     setCountTimer(false);
@@ -58,9 +57,10 @@ function Cart() {
             getCurrentUserAPI(user._id)
               .then((data) => {
                 localStorage.setItem("user", JSON.stringify(data.data));
-                // console.log("cart ",data)
-                window.location.reload()
-                // setUpdateCartFlag((prev) => !prev);
+                
+                // window.location.reload()
+                setUpdateCartFlag(!updateCartFlag)
+               
               })
               .catch((err) => {
                 console.log("error", err);
@@ -83,8 +83,9 @@ function Cart() {
           getCurrentUserAPI(user._id)
             .then((data) => {
               localStorage.setItem("user", JSON.stringify(data.data));
-              window.location.reload();
-              // setUpdateCartFlag((prev)=>!prev)
+              // window.location.reload();
+              
+              setUpdateCartFlag(!updateCartFlag)
             })
             .catch((err) => {
               console.log("error: ", err);
@@ -106,7 +107,8 @@ function Cart() {
           getCurrentUserAPI(user._id)
             .then((data) => {
               localStorage.setItem("user", JSON.stringify(data.data));
-              window.location.reload();
+              // window.location.reload();
+              setUpdateCartFlag(!updateCartFlag)
 
             })
             .catch((err) => {
