@@ -185,6 +185,7 @@ function AllOrders() {
                                     </div>
                                   </div>
                                 </li>
+                                 <div className='text-black font-semibold  mb-2  text-center' >Only Cash On Delivery</div>
                               </li>
                                 <hr />
                                 <hr />
@@ -278,6 +279,7 @@ function AllOrders() {
                                   
   
                                 </li>
+                                     <div className='text-black font-semibold  mb-2  text-center' >Only Cash On Delivery</div>
                                 </li>
                                 <hr />
                                 <hr />
